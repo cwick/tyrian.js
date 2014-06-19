@@ -23,7 +23,7 @@ open("../data/palette.dat", "rb") do |f|
     palettes << palette
   end
 
-  File.open("out/palettes.json", "w") { |f| f.write JSON.pretty_generate(palettes) }
+  File.open("../out/palettes.json", "w") { |f| f.write JSON.pretty_generate(palettes) }
 end
 
 
