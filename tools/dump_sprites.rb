@@ -42,9 +42,7 @@ def convert_sprite(sprite)
       i += 1
       # next byte tells how many
       sprite[:data][i].times do
-        if column_count < sprite[:width]
-          pixels << -1
-        end
+        pixels << -1
         print "."
         column_count += 1
       end
@@ -55,9 +53,7 @@ def convert_sprite(sprite)
       row_count += 1
       column_count = 0
     when 253 # 1 transparent pixel
-      if column_count < sprite[:width]
-        pixels << -1
-      end
+      pixels << -1
       column_count += 1
       print "."
     else  # set a pixel
@@ -73,18 +69,6 @@ def convert_sprite(sprite)
     end
 
     i += 1
-  end
-
-  if column_count > 0
-    (sprite[:width] - column_count).times { print "."; pixels << -1 }
-    column_count = 0
-    row_count += 1
-  end
-
-  missing_rows = sprite[:height] - row_count
-
-  if missing_rows > 0
-    (missing_rows*sprite[:width]).times { pixels << -1 }
   end
 
   puts
