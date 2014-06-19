@@ -1,11 +1,7 @@
-require 'json'
 require 'RMagick'
+require_relative "./sprite_lib"
 
 MAX_SPRITES = 304
-
-def load_palette
-  JSON.parse File.open("../out/palettes.json").read
-end
 
 def decode_sprite(data_string, index)
   data = data_string.unpack("C*")
@@ -56,24 +52,6 @@ def decode_sprite(data_string, index)
     width: width,
     height: height
   }
-end
-
-def indexed_to_truecolor(indexed_data, palette_index=0)
-  truecolor = []
-  palettes = load_palette
-  palette = palettes[palette_index]
-
-  indexed_data.each do |i|
-    color = palette[i]
-
-    if i == -1
-      truecolor += [0,0,0,0]
-    else
-      truecolor += [color["r"]*257, color["g"]*257, color["b"]*257, 255*257]
-    end
-  end
-
-  truecolor
 end
 
 def create_image(ul, ur, ll, lr)
