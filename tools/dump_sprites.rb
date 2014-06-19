@@ -91,11 +91,13 @@ def create_image(ul, ur, ll, lr)
 
   # Upper Right
   if ur[:width] > 0 && ur[:height] > 0
+    raise "too wide" if (ur[:width] + 12) > width
     image.import_pixels 12,0, ur[:width], ur[:height], "RGBA", ur[:data], Magick::ShortPixel
   end
 
   # Lower Left
   if ll[:width] > 0 && ll[:height] > 0
+    raise "too tall" if (ll[:height] + 14) > height
     image.import_pixels 0,14, ll[:width], ll[:height], "RGBA", ll[:data], Magick::ShortPixel
   end
 
