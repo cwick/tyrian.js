@@ -15,8 +15,6 @@ def decode_sprite2(data_string, index, palette=0)
     transparent_pixels = data[offset] & 0x0f
     opaque_pixels = (data[offset] & 0xf0) >> 4
 
-    # puts "#{transparent_pixels}, #{opaque_pixels}"
-
     width_counter += transparent_pixels + opaque_pixels
 
     transparent_pixels.times { sprite << -1 }
@@ -38,10 +36,6 @@ def decode_sprite2(data_string, index, palette=0)
   height += 1
 
   ((width*height) - sprite.length).times { sprite << -1 }
-
-  # puts sprite.inspect
-  # puts "Width: #{width}, Height: #{height}"
-  # puts "Length: #{sprite.length} bytes. width*height: #{width*height}"
 
   if width == -1
     width = height = 0
@@ -135,17 +129,23 @@ def load_palettes
 end
 
 def indexed_to_truecolor(indexed_data, palette_index=0)
-  truecolor = []
+  truecolor = Array.new(indexed_data.length*4)
   palettes = load_palettes
   palette = palettes[palette_index]
 
-  indexed_data.each do |i|
-    color = palette[i]
+  indexed_data.each_with_index do |pixel, i|
+    color = palette[pixel]
 
-    if i == -1
-      truecolor += [0,0,0,0]
+    if pixel == -1
+      truecolor[i*4] = 0
+      truecolor[i*4+1] = 0
+      truecolor[i*4+2] = 0
+      truecolor[i*4+3] = 0
     else
-      truecolor += [color["r"]*257, color["g"]*257, color["b"]*257, 255*257]
+      truecolor[i*4] = color["r"]*257
+      truecolor[i*4+1] = color["g"]*257
+      truecolor[i*4+2] = color["b"]*257
+      truecolor[i*4+3] = 255*257
     end
   end
 
