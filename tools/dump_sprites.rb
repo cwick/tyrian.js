@@ -86,6 +86,22 @@ def convert_sprite(sprite)
   image
 end
 
+def dump_player_ship_sprites(offsets, f)
+  start_offset = offsets[8]
+  end_offset = offsets[9]
+  size = end_offset - start_offset
+
+  f.seek start_offset
+  data = f.read size
+
+  (0..MAX_SPRITES-1).each do |i|
+    sprite = decode_sprite2(data, i)
+    next if sprite[:width] == 0 || sprite[:height] == 0
+    create_image_from_sprite(sprite).write "../out/temp/player_ships/#{i}.png"
+  end
+
+end
+
 open("../data/tyrian.shp", "rb") do |f|
   shape_count = f.read(2).unpack("S").first
   shape_offsets = []
@@ -94,31 +110,17 @@ open("../data/tyrian.shp", "rb") do |f|
     shape_offsets << f.read(4).unpack("l").first
   end
 
-  shape_offsets[0..6].each_with_index do |offset, table_number|
-    f.seek offset
-    load_sprites(f).each_with_index do |sprite, sprite_number|
-      if sprite
-        image = convert_sprite(sprite)
-        image.write "../out/temp/#{table_number}_#{sprite_number}.png"
-      end
-    end
-  end
-#
-#   (0..MAX_SPRITES-1).step(38).each do |offset|
-#     (0..16).step(2).each do |x|
-#       i = offset + x
-#       ul = create_sprite(data_string, i)
-#       ur = create_sprite(data_string, i+1)
-#       ll = create_sprite(data_string, i+19)
-#       lr = create_sprite(data_string, i+20)
-#
-#       image = create_image(ul, ur, ll, lr)
-#       if image
-#         image.write "../out/temp/#{i+1}.png"
-#         puts i+1
-#       end
-#     end
-#   end
+  dump_player_ship_sprites(shape_offsets, f)
+
+  # shape_offsets[0..6].each_with_index do |offset, table_number|
+  #   f.seek offset
+  #   load_sprites(f).each_with_index do |sprite, sprite_number|
+  #     if sprite
+  #       image = convert_sprite(sprite)
+  #       image.write "../out/temp/#{table_number}_#{sprite_number}.png"
+  #     end
+  #   end
+  # end
 end
 
 
