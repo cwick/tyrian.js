@@ -55,12 +55,21 @@ def decode_sprite2(data_string, index, palette=0)
 end
 
 def decode_sprite2x2(data_string, index, palette=0)
-  ul = decode_sprite2(data_string, index)
-  ur = decode_sprite2(data_string, index+1)
-  ll = decode_sprite2(data_string, index+19)
-  lr = decode_sprite2(data_string, index+20)
+  ul = decode_sprite2(data_string, index, palette)
+  ur = decode_sprite2(data_string, index+1, palette)
+  ll = decode_sprite2(data_string, index+19, palette)
+  lr = decode_sprite2(data_string, index+20, palette)
 
   create_sprite_2x2(ul, ur, ll, lr)
+end
+
+def dump_sprites_2x2(data, sprites, dirname, palette=0)
+  out_dir = "../out/temp/#{dirname}"
+  Dir.mkdir out_dir unless File.exists? out_dir
+
+  sprites.each do |i|
+    decode_sprite2x2(data, i, palette).write "#{out_dir}/#{i}.png"
+  end
 end
 
 def create_sprite_2x2(ul, ur, ll, lr)

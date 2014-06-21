@@ -94,12 +94,16 @@ def dump_player_ship_sprites(offsets, f)
   f.seek start_offset
   data = f.read size
 
-  (0..MAX_SPRITES-1).each do |i|
-    sprite = decode_sprite2(data, i)
-    next if sprite[:width] == 0 || sprite[:height] == 0
-    create_image_from_sprite(sprite).write "../out/temp/player_ships/#{i}.png"
-  end
 
+  sprites = [122, 120, 118, 116, 114, 78, 76, 196, 154, 152, 156, 158, 160, 194, 198, 234, 236, 84, 192, 232, 82, 190, 230, 228, 80]
+
+  dump_sprites_2x2(data, sprites, "player_ships")
+end
+
+def dump_newsh1(data)
+  sprites = [0, 2, 4, 6, 8, 10, 12, 14, 16, 38, 40, 42, 44, 46, 48, 50, 52, 54, 76, 78, 80, 82, 84, 86, 88, 90, 92, 114, 116, 118, 120, 122, 124, 126, 128, 130, 152, 154, 156, 158, 160, 162, 164, 166, 168, 190, 192, 194, 196, 198, 200, 202, 204, 206, 228, 230, 232, 234, 236, 238, 240, 242, 244, 266, 268, 270, 272, 274, 276, 278, 280, 282]
+
+  dump_sprites_2x2(data, sprites, "newsh1")
 end
 
 open("../data/tyrian.shp", "rb") do |f|
@@ -112,15 +116,11 @@ open("../data/tyrian.shp", "rb") do |f|
 
   dump_player_ship_sprites(shape_offsets, f)
 
-  # shape_offsets[0..6].each_with_index do |offset, table_number|
-  #   f.seek offset
-  #   load_sprites(f).each_with_index do |sprite, sprite_number|
-  #     if sprite
-  #       image = convert_sprite(sprite)
-  #       image.write "../out/temp/#{table_number}_#{sprite_number}.png"
-  #     end
-  #   end
-  # end
+end
+
+open("../data/newsh1.shp", "rb") do |f|
+  data = f.read
+  dump_newsh1(data)
 end
 
 
