@@ -63,7 +63,7 @@ def decode_sprite2x2(data_string, index, palette=0)
   create_sprite_2x2(ul, ur, ll, lr)
 end
 
-def dump_sprites_2x2(data, sprites, dirname, palette=0)
+def dump_sprites2x2(data, sprites, dirname, palette=0)
   out_dir = "../out/temp/#{dirname}"
   Dir.mkdir out_dir unless File.exists? out_dir
 
@@ -72,11 +72,25 @@ def dump_sprites_2x2(data, sprites, dirname, palette=0)
   end
 end
 
+def dump_sprites2(data, sprites, dirname, palette=0)
+  out_dir = "../out/temp/#{dirname}"
+  Dir.mkdir out_dir unless File.exists? out_dir
+
+  sprites.each do |i|
+    sprite = decode_sprite2(data, i, palette)
+    if sprite[:width] > 0 && sprite[:height] > 0
+      create_image_from_sprite(sprite).write "#{out_dir}/#{i}.png"
+    end
+  end
+end
+
 def create_sprite_2x2(ul, ur, ll, lr)
   width = [ul[:width] + ur[:width], ll[:width] + lr[:width]].max
   height = [ul[:height] + ll[:height], ur[:height] + lr[:height]].max
 
   raise "empty sprite" if width == 0 || height == 0
+
+  height = [ll[:height] + 14, height].max
 
   image = Magick::Image.new(width, height) { self.background_color = "transparent" }
 
@@ -93,7 +107,6 @@ def create_sprite_2x2(ul, ur, ll, lr)
 
   # Lower Left
   if ll[:width] > 0 && ll[:height] > 0
-    raise "too tall" if (ll[:height] + 14) > height
     image.import_pixels 0,14, ll[:width], ll[:height], "RGBA", ll[:data], Magick::ShortPixel
   end
 

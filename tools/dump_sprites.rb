@@ -97,13 +97,37 @@ def dump_player_ship_sprites(offsets, f)
 
   sprites = [122, 120, 118, 116, 114, 78, 76, 196, 154, 152, 156, 158, 160, 194, 198, 234, 236, 84, 192, 232, 82, 190, 230, 228, 80]
 
-  dump_sprites_2x2(data, sprites, "player_ships")
+  dump_sprites2x2(data, sprites, "player_ships")
+end
+
+def dump_player_shot_sprites(offsets, f)
+  start_offset = offsets[7]
+  end_offset = offsets[8]
+  size = end_offset - start_offset
+
+  f.seek start_offset
+  data = f.read size
+
+  dump_sprites2(data, (0..MAX_SPRITES-1), "player_shots")
+end
+
+def dump_powerup_sprites(offsets, f)
+  start_offset = offsets[9]
+  end_offset = offsets[10]
+  size = end_offset - start_offset
+
+  f.seek start_offset
+  data = f.read size
+
+  sprites = [10, 126, 162, 128, 122, 124]
+
+  dump_sprites2x2(data, sprites, "powerups2")
 end
 
 def dump_newsh1(data)
   sprites = [0, 2, 4, 6, 8, 10, 12, 14, 16, 38, 40, 42, 44, 46, 48, 50, 52, 54, 76, 78, 80, 82, 84, 86, 88, 90, 92, 114, 116, 118, 120, 122, 124, 126, 128, 130, 152, 154, 156, 158, 160, 162, 164, 166, 168, 190, 192, 194, 196, 198, 200, 202, 204, 206, 228, 230, 232, 234, 236, 238, 240, 242, 244, 266, 268, 270, 272, 274, 276, 278, 280, 282]
 
-  dump_sprites_2x2(data, sprites, "newsh1")
+  dump_sprites2x2(data, sprites, "newsh1")
 end
 
 open("../data/tyrian.shp", "rb") do |f|
@@ -114,8 +138,9 @@ open("../data/tyrian.shp", "rb") do |f|
     shape_offsets << f.read(4).unpack("l").first
   end
 
-  dump_player_ship_sprites(shape_offsets, f)
-
+  # dump_player_ship_sprites(shape_offsets, f)
+  # dump_player_shot_sprites(shape_offsets, f)
+  dump_powerup_sprites(shape_offsets, f)
 end
 
 open("../data/newsh1.shp", "rb") do |f|
