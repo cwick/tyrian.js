@@ -1,40 +1,21 @@
 `module Two from "two"`
 
 Game = Two.Game.extend
-  setup: ->
-    @canvasSize = [640, 480]
+  configure: ->
+    scale = 2
+    @canvas.width = 320 * scale
+    @canvas.height = 200 * scale
+    @camera.width = 320
+    @camera.height = 200
+    @renderer.backend.imageSmoothingEnabled = false
 
-  update: ->
-    helloWorldTransform.rotation += 0.008
-    wobble.position.x = Math.sin(Date.now() / 500) * 100
+    loader = new Two.AssetLoader(baseDir: "converted_data")
+    loader.preloadImage "player_ships.png"
+
+    ship = @scene.add new Two.TransformNode(position: [20, 200])
+    shipSprite = new Two.Sprite(anchorPoint: [0,1], image: loader.loadImage("player_ships"), crop: { x: 2, y: 2, width: 24, height: 28 })
+    ship.add new Two.RenderNode(elements: [shipSprite])
 
 game = new Game()
-game.camera.anchorPoint = [0.5, 0.5]
-
-wobble = new Two.TransformNode()
-helloWorldTransform = new Two.TransformNode()
-worldTransform = new Two.TransformNode()
-helloTransform = new Two.TransformNode()
-
-helloWorldTransform.scale = .5
-
-helloTransform.add new Two.RenderNode()
-helloTransform.children[0].add new Two.Sprite
-  image: "/demo/assets/hello.gif"
-  anchorPoint: [0, 1]
-worldTransform.add new Two.RenderNode()
-worldTransform.children[0].add new Two.Sprite
-  image: "/demo/assets/world.jpg"
-  anchorPoint: [0, 1]
-
-helloTransform.position = [-305, 150]
-worldTransform.position = [0, 150]
-
-game.scene.add wobble
-
-wobble.add helloWorldTransform
-helloWorldTransform.add helloTransform
-helloWorldTransform.add worldTransform
-
 game.start()
 
