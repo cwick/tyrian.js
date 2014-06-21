@@ -119,9 +119,9 @@ def dump_powerup_sprites(offsets, f)
   f.seek start_offset
   data = f.read size
 
-  sprites = [10, 126, 162, 128, 122, 124]
+  sprites = [10, 126, 162, 128, 122, 124, 152, 154, 156, 158, 160, 162, 164, 166, 168, 190, 192, 194, 196, 198, 200, 202, 204, 206, 228, 230, 232, 234, 236, 238, 240, 242, 244, 266, 268, 270, 272, 274, 276, 278, 280, 282, 40, 42, 44, 46, 48, 54, 6, 8, 82, 84, 86, 90, 92]
 
-  dump_sprites2x2(data, sprites, "powerups2")
+  dump_sprites2x2(data, sprites, "powerups")
 end
 
 def dump_newsh1(data)
