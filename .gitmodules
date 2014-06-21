@@ -1,0 +1,3 @@
+[submodule "two.js"]
+	path = two.js
+	url = git@github.com:cwick/two.js.git
