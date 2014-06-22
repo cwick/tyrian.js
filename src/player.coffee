@@ -5,10 +5,8 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
 
   initialize: ->
     tyrianOrigin = @transform.add new Two.TransformNode(position: [-24 - 5, -7])
-    @shipSprite = new Two.Sprite
-      anchorPoint: [0,1]
-      image: @game.loader.loadImage("player_ships")
-      crop: { x: 210, y: 32, width: 24, height: 27 }
+
+    @shipSprite = @loadShip 232
 
     tyrianOrigin.add new Two.RenderNode(elements: [@shipSprite])
 
@@ -16,7 +14,7 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
     @physics.boundingBox.y *= -1
     @physics.postUpdate = => @constrainToScreenBounds()
     @physics.maxVelocity = [4 * @SHIP_SPEED, 4 * @SHIP_SPEED]
-    @physics.drag = [@physics.maxVelocity.x * (30/4), @physics.maxVelocity.y * (30/4)]
+    @physics.drag = [@physics.maxVelocity.x * (30/6), @physics.maxVelocity.y * (30/6)]
 
   spawn: ->
     @physics.position = [100, 180]
@@ -44,7 +42,7 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
 
   updateBankAngle: ->
     bankAmount = @physics.velocity.x / @SHIP_SPEED
-    bankFrame = Math.floor((bankAmount + 4)/2)
+    bankFrame = Math.floor((bankAmount)/2)
 
     @shipSprite.frame = bankFrame
 
@@ -63,5 +61,27 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
       @physics.position.y = 160
       @physics.velocity.y = 0
 
+  loadShip: (num) ->
+    ships = @game.loader.loadObject("player_ships").frames
+    frames = {}
+    frames[0] = ships[num].frame
+    frames[1] = ships[num+2].frame
+    frames[-1] = ships[num-2].frame
+    frames[2] = ships[num+4].frame
+    frames[-2] = ships[num-4].frame
+
+    shipSprite = new Two.Sprite
+      anchorPoint: [0,1]
+      image: @game.loader.loadImage("player_ships")
+
+    for name, frame of frames
+      shipSprite.addFrame name,
+        x: frame.x
+        y: frame.y
+        width: frame.w
+        height: frame.h
+
+    shipSprite.frame = 0
+    shipSprite
 
 `export default Player`

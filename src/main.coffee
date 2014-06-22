@@ -19,6 +19,7 @@ class MainState
   preload: (game) ->
     game.loader.preloadImage "player_ships.png"
     game.loader.preloadImage "pics/2.png"
+    game.loader.preloadObject "player_ships.json"
 
   enter: (game) ->
     background = game.scene.add new Two.TransformNode()
