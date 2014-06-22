@@ -26,6 +26,8 @@ Game = Two.Game.extend
 game = new Game()
 
 game.registerEntity "Player", Two.GameObject.extend Two.Components.ArcadePhysics,
+  GAME_SPEED: 55
+
   initialize: ->
     tyrianOrigin = @transform.add new Two.TransformNode(position: [-24 - 5, -7])
     shipSprite = new Two.Sprite
@@ -38,6 +40,7 @@ game.registerEntity "Player", Two.GameObject.extend Two.Components.ArcadePhysics
     @physics.boundingBox.fromSprite shipSprite
     @physics.boundingBox.y *= -1
     @physics.postUpdate = => @constrainToScreenBounds()
+    @physics.maxVelocity = [4 * @GAME_SPEED, 4 * @GAME_SPEED]
 
   spawn: ->
     @physics.position = [40, 10]
@@ -56,8 +59,8 @@ game.registerEntity "Player", Two.GameObject.extend Two.Components.ArcadePhysics
     if @game.input.keyboard.isKeyDown Two.Keys.DOWN
       @physics.velocity.y += 1
 
-    @physics.velocity.x *= 4 * 60
-    @physics.velocity.y *= 4 * 60
+    @physics.velocity.x *= 4 * @GAME_SPEED
+    @physics.velocity.y *= 4 * @GAME_SPEED
 
   constrainToScreenBounds: ->
     if @physics.position.x < 40
