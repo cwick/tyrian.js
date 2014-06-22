@@ -5,7 +5,7 @@ MAX_SPRITES = 304
 
 def decode_sprite2(data_string, index, palette=0)
   data = data_string.unpack("C*")
-  offset = data_string.unpack("S#{MAX_SPRITES}")[index]
+  offset = data_string.unpack("S#{MAX_SPRITES}")[index-1]
   sprite = []
   width = -1
   height = 0

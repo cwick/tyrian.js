@@ -1,3 +1,5 @@
+require 'json'
+
 WEAP_NUM = 780
 
 JE_longint = [4, "l"]
@@ -41,7 +43,8 @@ open("../data/tyrian.hdt", "rb") do |f|
     weapon[:shipblastfilter] = efread(JE_byte, 1, f).first
 
     weapons << weapon
-
-    puts "drain=#{weapon[:drain]}, shotrepeat=#{weapon[:shotrepeat]}"
   end
+
+  File.open("../converted_data/weapons.json", "w") { |f| f.write JSON.pretty_generate(weapons) }
 end
+
