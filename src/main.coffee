@@ -27,8 +27,7 @@ game = new Game()
 
 game.registerEntity "Player", Two.GameObject.extend Two.Components.ArcadePhysics,
   initialize: ->
-    # tyrianOrigin = @transform.add new Two.TransformNode(position: [-24 - 5, -7])
-    tyrianOrigin = @transform.add new Two.TransformNode()
+    tyrianOrigin = @transform.add new Two.TransformNode(position: [-24 - 5, -7])
     shipSprite = new Two.Sprite
       anchorPoint: [0,1]
       image: @game.loader.loadImage("player_ships")
@@ -38,22 +37,40 @@ game.registerEntity "Player", Two.GameObject.extend Two.Components.ArcadePhysics
 
     @physics.boundingBox.fromSprite shipSprite
     @physics.boundingBox.y *= -1
+    @physics.postUpdate = => @constrainToScreenBounds()
 
   spawn: ->
-    @transform.position = [0, 0]
+    @physics.position = [40, 10]
 
   update: ->
+    @physics.velocity.x = 0
+    @physics.velocity.y = 0
+
     if @game.input.keyboard.isKeyDown Two.Keys.LEFT
-      @physics.velocity.x = -4 * 60
-    else if @game.input.keyboard.isKeyDown Two.Keys.RIGHT
-      @physics.velocity.x = 4 * 60
-    else if @game.input.keyboard.isKeyDown Two.Keys.UP
-      @physics.velocity.y = -4 * 60
-    else if @game.input.keyboard.isKeyDown Two.Keys.DOWN
-      @physics.velocity.y = 4 * 60
-    else
-      @physics.velocity.x = 0
-      @physics.velocity.y = 0
+      @physics.velocity.x += -1
+    if @game.input.keyboard.isKeyDown Two.Keys.RIGHT
+      @physics.velocity.x += 1
+
+    if @game.input.keyboard.isKeyDown Two.Keys.UP
+      @physics.velocity.y += -1
+    if @game.input.keyboard.isKeyDown Two.Keys.DOWN
+      @physics.velocity.y += 1
+
+    @physics.velocity.x *= 4 * 60
+    @physics.velocity.y *= 4 * 60
+
+  constrainToScreenBounds: ->
+    if @physics.position.x < 40
+      @physics.position.x = 40
+
+    if @physics.position.x > 256
+      @physics.position.x = 256
+
+    if @physics.position.y < 10
+      @physics.position.y = 10
+
+    if @physics.position.y > 160
+      @physics.position.y = 160
 
 game.start()
 
