@@ -16,9 +16,9 @@ open("../data/tyrian.hdt", "rb") do |f|
   f.seek(efread(JE_longint, 1, f).first)
   f.read(2*7)
 
-  weapons = []
+  weapons = {}
 
-  WEAP_NUM.times do
+  (0..WEAP_NUM-1).each do |i|
     weapon = {}
     weapon[:drain] =           efread(JE_word, 1, f).first
     weapon[:shotrepeat] =      efread(JE_byte, 1, f).first
@@ -42,7 +42,7 @@ open("../data/tyrian.hdt", "rb") do |f|
     weapon[:trail] =           efread(JE_byte, 1, f).first
     weapon[:shipblastfilter] = efread(JE_byte, 1, f).first
 
-    weapons << weapon
+    weapons[i] = weapon
   end
 
   File.open("../converted_data/weapons.json", "w") { |f| f.write JSON.pretty_generate(weapons) }
