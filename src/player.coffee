@@ -1,8 +1,6 @@
 `module Two from "two"`
 
 Player = Two.GameObject.extend Two.Components.ArcadePhysics,
-  SHIP_SPEED: 45
-
   initialize: ->
     tyrianOrigin = @transform.add new Two.TransformNode(position: [-24 - 5, -7])
 
@@ -13,8 +11,14 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
     @physics.boundingBox.fromSprite @shipSprite
     @physics.boundingBox.y *= -1
     @physics.postUpdate = => @constrainToScreenBounds()
-    @physics.maxVelocity = [4 * @SHIP_SPEED, 4 * @SHIP_SPEED]
-    @physics.drag = [@physics.maxVelocity.x * (30/6), @physics.maxVelocity.y * (30/6)]
+    @physics.maxVelocity = [@maxVelocity, @maxVelocity]
+    @physics.drag = [@acceleration/2, @acceleration/2]
+
+  maxVelocity: Two.Property
+    get: -> 4 * @game.tyrian.TICKS_PER_SECOND
+
+  acceleration: Two.Property
+    get: -> Math.pow @game.tyrian.TICKS_PER_SECOND, 2
 
   spawn: ->
     @physics.position = [100, 180]
@@ -37,11 +41,11 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
     if @game.input.keyboard.isKeyDown Two.Keys.DOWN
       @physics.acceleration.y += 1
 
-    @physics.acceleration.x *= @physics.drag.x
-    @physics.acceleration.y *= @physics.drag.y
+    @physics.acceleration.x *= @acceleration
+    @physics.acceleration.y *= @acceleration
 
   updateBankAngle: ->
-    bankAmount = @physics.velocity.x / @SHIP_SPEED
+    bankAmount = @physics.velocity.x / @game.tyrian.TICKS_PER_SECOND
     bankFrame = Math.floor((bankAmount)/2)
 
     @shipSprite.frame = bankFrame
@@ -64,6 +68,8 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
   loadShip: (num) ->
     ships = @game.loader.loadObject("player_ships").frames
     frames = {}
+
+    # Set up sprites for ship banking angles
     frames[0] = ships[num].frame
     frames[1] = ships[num+2].frame
     frames[-1] = ships[num-2].frame

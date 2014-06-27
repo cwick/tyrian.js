@@ -14,6 +14,8 @@ Game = Two.Game.extend
     @world.physics.arcade.collideWorldBounds = false
 
     @loader.baseDir = "converted_data"
+    @tyrian =
+      TICKS_PER_SECOND: 35
 
 class MainState
   preload: (game) ->
