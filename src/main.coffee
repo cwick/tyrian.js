@@ -17,7 +17,7 @@ Game = Two.Game.extend
     @tyrian =
       TICKS_PER_SECOND: 35
 
-class MainState
+MainState = Two.State.extend
   preload: ->
     @game.loader.preloadImage "player_ships.png"
     @game.loader.preloadImage "pics/2.png"
@@ -29,8 +29,11 @@ class MainState
     background.add new Two.RenderNode(elements: [backgroundSprite])
 
     @game.spawn "Player"
+    @fpsText = new Two.Text(fontSize: 6)
+    @game.scene.add(new Two.RenderNode(elements: [@fpsText]))
 
   step: (increment) ->
+    @fpsText.text = Math.random()
 
 game = new Game()
 game.registerEntity "Player", Player
