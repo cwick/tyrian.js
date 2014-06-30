@@ -18,17 +18,19 @@ Game = Two.Game.extend
       TICKS_PER_SECOND: 35
 
 class MainState
-  preload: (game) ->
-    game.loader.preloadImage "player_ships.png"
-    game.loader.preloadImage "pics/2.png"
-    game.loader.preloadObject "player_ships.json"
+  preload: ->
+    @game.loader.preloadImage "player_ships.png"
+    @game.loader.preloadImage "pics/2.png"
+    @game.loader.preloadObject "player_ships.json"
 
-  enter: (game) ->
-    background = game.scene.add new Two.TransformNode()
-    backgroundSprite = new Two.Sprite(anchorPoint: [0,1], image: game.loader.loadImage("pics/2"))
+  enter: ->
+    background = @game.scene.add new Two.TransformNode()
+    backgroundSprite = new Two.Sprite(anchorPoint: [0,1], image: @game.loader.loadImage("pics/2"))
     background.add new Two.RenderNode(elements: [backgroundSprite])
 
-    game.spawn "Player"
+    @game.spawn "Player"
+
+  step: (increment) ->
 
 game = new Game()
 game.registerEntity "Player", Player
