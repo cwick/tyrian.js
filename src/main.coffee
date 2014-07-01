@@ -18,6 +18,9 @@ Game = Two.Game.extend
       TICKS_PER_SECOND: 35
 
 MainState = Two.State.extend
+  initialize: ->
+    @fpsSampler = new Two.PeriodicSampler(3)
+
   preload: ->
     @game.loader.preloadImage "player_ships.png"
     @game.loader.preloadImage "pics/2.png"
@@ -33,7 +36,7 @@ MainState = Two.State.extend
     @game.scene.add(new Two.RenderNode(elements: [@fpsText]))
 
   step: (increment) ->
-    @fpsText.text = Math.random()
+    @fpsText.text = "FPS: #{@fpsSampler.sample(@game.debug.fps)}"
 
 game = new Game()
 game.registerEntity "Player", Player
