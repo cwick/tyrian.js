@@ -2,7 +2,7 @@
 
 Player = Two.GameObject.extend Two.Components.ArcadePhysics,
   initialize: ->
-    tyrianOrigin = @transform.add new Two.TransformNode(position: [-24 - 5, -7])
+    tyrianOrigin = @transform.add new Two.TransformNode(position: [-5, -7])
 
     @shipSprite = @loadShip 233
 
@@ -26,6 +26,7 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
   update: ->
     @updateMovement()
     @updateBankAngle()
+    @fireShots()
 
   updateMovement: ->
     @physics.acceleration.x = 0
@@ -49,6 +50,11 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
     bankFrame = Math.floor((bankAmount)/2)
 
     @shipSprite.frame = bankFrame
+
+  fireShots: ->
+    if @game.input.keyboard.isKeyDown(Two.Keys.SPACEBAR) && !@shot
+      @shot = @game.spawn "Shot"
+      @shot.physics.position = [@physics.position.x + 1, @physics.position.y]
 
   constrainToScreenBounds: ->
     if @physics.position.x < 40

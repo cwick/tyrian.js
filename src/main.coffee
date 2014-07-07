@@ -1,5 +1,6 @@
 `module Two from "two"`
 `import Player from "./player"`
+`import Shot from "./shot"`
 
 Game = Two.Game.extend
   initialize: ->
@@ -13,6 +14,9 @@ Game = Two.Game.extend
 
     @world.physics.arcade.collideWorldBounds = false
 
+    # TODO: game viewport needs to be shifted over by 24 pixels to match what Tyrian does
+    # @scene.position.x -= 24
+
     @loader.baseDir = "converted_data"
     @tyrian =
       TICKS_PER_SECOND: 35
@@ -23,8 +27,13 @@ MainState = Two.State.extend
 
   preload: ->
     @game.loader.preloadImage "player_ships.png"
-    @game.loader.preloadImage "pics/2.png"
     @game.loader.preloadObject "player_ships.json"
+
+    @game.loader.preloadImage "player_shots.png"
+    @game.loader.preloadObject "player_shots.json"
+
+    @game.loader.preloadImage "pics/2.png"
+    @game.loader.preloadObject "weapons.json"
 
   enter: ->
     background = @game.scene.add new Two.TransformNode()
@@ -40,6 +49,7 @@ MainState = Two.State.extend
 
 game = new Game()
 game.registerEntity "Player", Player
+game.registerEntity "Shot", Shot
 game.registerState "main", MainState
 
 game.start("main")
