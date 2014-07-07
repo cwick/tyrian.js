@@ -14,12 +14,13 @@ Game = Two.Game.extend
 
     @world.physics.arcade.collideWorldBounds = false
 
-    # TODO: game viewport needs to be shifted over by 24 pixels to match what Tyrian does
-    # @scene.position.x -= 24
-
     @loader.baseDir = "converted_data"
     @tyrian =
       TICKS_PER_SECOND: 35
+      viewport: new Two.TransformNode(position: [-24, 0])
+      layers:
+        shots: new Two.TransformNode()
+        ships: new Two.TransformNode()
 
 MainState = Two.State.extend
   initialize: ->
@@ -36,9 +37,15 @@ MainState = Two.State.extend
     @game.loader.preloadObject "weapons.json"
 
   enter: ->
+    @game.scene.removeAll()
+
     background = @game.scene.add new Two.TransformNode()
     backgroundSprite = new Two.Sprite(anchorPoint: [0,1], image: @game.loader.loadImage("pics/2"))
     background.add new Two.RenderNode(elements: [backgroundSprite])
+
+    @game.scene.add @game.tyrian.viewport
+    @game.tyrian.viewport.add @game.tyrian.layers.shots
+    @game.tyrian.viewport.add @game.tyrian.layers.ships
 
     @game.spawn "Player"
     @fpsText = new Two.Text(fontSize: 6)

@@ -17,4 +17,7 @@ Shot = Two.GameObject.extend Two.Components.ArcadePhysics,
 
     @transform.add new Two.RenderNode(elements: [shotSprite])
 
+  spawn: ->
+    @game.tyrian.layers.shots.add @transform
+
 `export default Shot`
