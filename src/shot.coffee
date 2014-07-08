@@ -2,23 +2,25 @@
 
 Shot = Two.GameObject.extend Two.Components.ArcadePhysics,
   initialize: ->
-    @shotData = @game.loader.loadObject("weapons")[155]
-    shotSpriteNumber = @shotData.sg[0]
-    shotSpriteFrame = @game.loader.loadObject("player_shots").frames[shotSpriteNumber].frame
-
-    shotSprite = new Two.Sprite
+    @shotSprite = new Two.Sprite
       anchorPoint: [0,1]
       image: @game.loader.loadImage("player_shots")
       crop:
-        x: shotSpriteFrame.x
-        y: shotSpriteFrame.y
-        width: shotSpriteFrame.w
-        height: shotSpriteFrame.h
+        x: 0
+        y: 0
+        width: 0
+        height: 0
 
-    @transform.add new Two.RenderNode(elements: [shotSprite])
+    @transform.add new Two.RenderNode(elements: [@shotSprite])
 
-  spawn: ->
+  spawn: (options) ->
+    shotSpriteFrame = @game.loader.loadObject("player_shots").frames[options.spriteNumber].frame
+    @shotSprite.crop =
+      x: shotSpriteFrame.x
+      y: shotSpriteFrame.y
+      width: shotSpriteFrame.w
+      height: shotSpriteFrame.h
+
     @game.tyrian.layers.shots.add @transform
-    @physics.velocity = [0, -@shotData.sy[0] * @game.tyrian.TICKS_PER_SECOND]
 
 `export default Shot`

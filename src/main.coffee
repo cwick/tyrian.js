@@ -1,6 +1,7 @@
 `module Two from "two"`
 `import Player from "./player"`
 `import Shot from "./shot"`
+`import Weapon from "./weapon"`
 
 Game = Two.Game.extend
   initialize: ->
@@ -57,6 +58,7 @@ MainState = Two.State.extend
 game = new Game()
 game.registerEntity "Player", Player
 game.registerEntity "Shot", Shot
+game.registerEntity "Weapon", Weapon
 game.registerState "main", MainState
 
 game.start("main")

@@ -23,7 +23,8 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
   spawn: ->
     @physics.position = [100, 180]
     @game.tyrian.layers.ships.add @transform
-    @canFireShot = true
+    @weapon = @game.spawn "Weapon", weaponNumber: 155
+    @transform.add @weapon.transform
 
   update: ->
     @updateMovement()
@@ -54,17 +55,7 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
     @shipSprite.frame = bankFrame
 
   fireShots: ->
-    if @game.input.keyboard.isKeyDown(Two.Keys.SPACEBAR) && @canFireShot
-      @fireShot()
-      @canFireShot = false
-
-      @game.setTimeout 0.5, =>
-        @canFireShot = true
-        @fireShots()
-
-  fireShot: ->
-    shot = @game.spawn "Shot"
-    shot.physics.position = [@physics.position.x + 1, @physics.position.y]
+    @weapon.fireShots() if @game.input.keyboard.isKeyDown(Two.Keys.SPACEBAR)
 
   constrainToScreenBounds: ->
     if @physics.position.x < 40
