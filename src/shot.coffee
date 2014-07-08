@@ -23,4 +23,9 @@ Shot = Two.GameObject.extend Two.Components.ArcadePhysics,
 
     @game.tyrian.layers.shots.add @transform
 
+  update: ->
+    position = @physics.position
+    if position.x < -34 || position.x > 290 || position.y < -15 || position.y > 190
+      @die()
+
 `export default Shot`

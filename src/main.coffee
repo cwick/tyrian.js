@@ -26,6 +26,7 @@ Game = Two.Game.extend
 MainState = Two.State.extend
   initialize: ->
     @fpsSampler = new Two.PeriodicSampler(3)
+    @objectSampler = new Two.PeriodicSampler(4)
 
   preload: ->
     @game.loader.preloadImage "player_ships.png"
@@ -50,10 +51,13 @@ MainState = Two.State.extend
 
     @game.spawn "Player"
     @fpsText = new Two.Text(fontSize: 6)
+    @objectCountText = new Two.Text(fontSize: 6)
     @game.scene.add(new Two.RenderNode(elements: [@fpsText]))
+    @game.scene.add(new Two.TransformNode(position: [0, 10])).add new Two.RenderNode(elements: [@objectCountText])
 
   step: (increment) ->
     @fpsText.text = "FPS: #{@fpsSampler.sample(@game.debug.fps)}"
+    @objectCountText.text = "Game objects: #{@objectSampler.sample(@game.world.objects.length)}"
 
 game = new Game()
 game.registerEntity "Player", Player
