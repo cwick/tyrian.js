@@ -1,6 +1,7 @@
 require 'json'
 
 WEAP_NUM = 780
+PORT_NUM = 42
 
 JE_longint = [4, "l"]
 JE_integer = [2, "2"]
@@ -17,8 +18,9 @@ open("../data/tyrian.hdt", "rb") do |f|
   f.read(2*7)
 
   weapons = {}
+  weapon_ports = {}
 
-  (0..WEAP_NUM-1).each do |i|
+  (0..WEAP_NUM).each do |i|
     weapon = {}
     weapon[:drain] =           efread(JE_word, 1, f).first
     weapon[:shotrepeat] =      efread(JE_byte, 1, f).first
@@ -45,6 +47,27 @@ open("../data/tyrian.hdt", "rb") do |f|
     weapons[i] = weapon
   end
 
+  (0..PORT_NUM).each do |i|
+    weapon_port = {}
+
+    f.seek(1, IO::SEEK_CUR) # skip string length
+
+    weapon_port[:name] = f.read(30).strip
+    weapon_port[:opnum] = efread(JE_byte, 1, f).first
+    weapon_port[:op] = []
+
+    2.times do
+      weapon_port[:op] << efread(JE_word, 11, f)
+    end
+
+    weapon_port[:cost] = efread(JE_word, 1, f).first
+    weapon_port[:itemgraphic] = efread(JE_word, 1, f).first
+    weapon_port[:poweruse] = efread(JE_word, 1, f).first
+
+    weapon_ports[i] = weapon_port
+  end
+
   File.open("../converted_data/weapons.json", "w") { |f| f.write JSON.pretty_generate(weapons) }
+  File.open("../converted_data/weapon_ports.json", "w") { |f| f.write JSON.pretty_generate(weapon_ports) }
 end
 
