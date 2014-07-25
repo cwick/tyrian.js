@@ -19,8 +19,14 @@ Weapon = Two.GameObject.extend
       @canFireShot = true
 
   _spawnShot: (shotNumber) ->
+    spawnX = @weapon.bx[shotNumber]
+    spawnY = @weapon.by[shotNumber]
+
+    velocityX = @weapon.sx[shotNumber] * @game.tyrian.TICKS_PER_SECOND
+    velocityY = -@weapon.sy[shotNumber] * @game.tyrian.TICKS_PER_SECOND
+
     shot = @game.spawn "Shot", spriteNumber: @weapon.sg[shotNumber]
-    shot.physics.position = [@transform.parent.position.x + 1, @transform.parent.position.y]
-    shot.physics.velocity = [0, -@weapon.sy[shotNumber] * @game.tyrian.TICKS_PER_SECOND]
+    shot.physics.position = [@transform.parent.position.x + 1 + spawnX, @transform.parent.position.y + spawnY]
+    shot.physics.velocity = [velocityX, velocityY]
 
 `export default Weapon`
