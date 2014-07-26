@@ -2,8 +2,41 @@
 `module $ from "jquery"`
 
 WeaponTestState = BaseState.extend
+  switchWeapon: ->
+    weapon = @weaponPorts[$("#weapon-select").val()]
+    power = $("#power-select").val()
+
+    @game.world.findByName("Player").switchWeapon weapon.op[0][power]
+
   enter: ->
     BaseState.prototype.enter.apply @
+
+    weaponSelect = $("#weapon-selector")
+    weaponSelect.html("""
+      <h1>Weapon Select</h1>
+      <select id="weapon-select"> </select>
+      <select id="power-select"> </select>
+    """)
+
+    @weaponPorts = @game.loader.loadObject("weapon_ports")
+    @weaponPorts = (@weaponPorts[k] for k of @weaponPorts).sort((a,b) ->
+      return 1 if a.name > b.name
+      return -1 if a.name < b.name
+      return 0
+    )
+
+    for weapon,i in @weaponPorts
+      $("#weapon-select").append($("<option>", value: i, html: weapon.name))
+
+    for i in [1..11]
+      $("#power-select").append($("<option>", value: i-1, html: i))
+
+    $("#weapon-select").on "change", (e) =>
+      $("#power-select").val(0)
+      @switchWeapon()
+
+    $("#power-select").on "change", (e) =>
+      @switchWeapon()
 
 `export default WeaponTestState`
 

@@ -26,7 +26,7 @@ BaseState = Two.State.extend
     @game.tyrian.viewport.add @game.tyrian.layers.shots
     @game.tyrian.viewport.add @game.tyrian.layers.ships
 
-    @game.spawn "Player"
+    @game.spawn "Player", name: "Player"
     @fpsText = new Two.Text(fontSize: 6)
     @objectCountText = new Two.Text(fontSize: 6)
     @game.scene.add(new Two.RenderNode(elements: [@fpsText]))
@@ -34,6 +34,6 @@ BaseState = Two.State.extend
 
   step: (increment) ->
     @fpsText.text = "FPS: #{@debugSampler.sample(@game.debug.fps, "fps")}"
-    @objectCountText.text = "Game objects: #{@debugSampler.sample(@game.world.objects.length, "objects")}"
+    @objectCountText.text = "Game objects: #{@debugSampler.sample(@game.world.entityCount, "objects")}"
 
 `export default BaseState`

@@ -57,6 +57,9 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
   fireShots: ->
     @weapon.fireShots() if @game.input.keyboard.isKeyDown(Two.Keys.SPACEBAR)
 
+  switchWeapon: (weaponNumber) ->
+    @weapon.spawn weaponNumber: weaponNumber
+
   constrainToScreenBounds: ->
     if @physics.position.x < 40
       @physics.position.x = 40
