@@ -2,20 +2,26 @@
 `import Player from "./player"`
 `import Shot from "./shot"`
 `import Weapon from "./weapon"`
+`import WeaponTestState from "./weapon_test_state"`
 
 Game = Two.Game.extend
   initialize: ->
     scale = 2
-    @canvas.width = 320 * scale
-    @canvas.height = 200 * scale
-    @camera.width = 320
-    @camera.height = 200
+    GAME_WIDTH = 320
+    GAME_HEIGHT = 200
+
+    @canvas.width = GAME_WIDTH * scale
+    @canvas.height = GAME_HEIGHT * scale
+    @camera.width = GAME_WIDTH
+    @camera.height = GAME_HEIGHT
+
     @renderer.backend.imageSmoothingEnabled = false
     @renderer.backend.flipYAxis = true
 
     @world.physics.arcade.collideWorldBounds = false
 
     @loader.baseDir = "converted_data"
+
     @tyrian =
       TICKS_PER_SECOND: 35
       viewport: new Two.TransformNode(position: [-24, 0])
@@ -23,46 +29,12 @@ Game = Two.Game.extend
         shots: new Two.TransformNode()
         ships: new Two.TransformNode()
 
-MainState = Two.State.extend
-  initialize: ->
-    @debugSampler = new Two.PeriodicSampler(3)
-
-  preload: ->
-    @game.loader.preloadImage "player_ships.png"
-    @game.loader.preloadObject "player_ships.json"
-
-    @game.loader.preloadImage "player_shots.png"
-    @game.loader.preloadObject "player_shots.json"
-
-    @game.loader.preloadImage "pics/2.png"
-    @game.loader.preloadObject "weapons.json"
-
-  enter: ->
-    @game.scene.removeAll()
-
-    background = @game.scene.add new Two.TransformNode()
-    backgroundSprite = new Two.Sprite(anchorPoint: [0,1], image: @game.loader.loadImage("pics/2"))
-    background.add new Two.RenderNode(elements: [backgroundSprite])
-
-    @game.scene.add @game.tyrian.viewport
-    @game.tyrian.viewport.add @game.tyrian.layers.shots
-    @game.tyrian.viewport.add @game.tyrian.layers.ships
-
-    @game.spawn "Player"
-    @fpsText = new Two.Text(fontSize: 6)
-    @objectCountText = new Two.Text(fontSize: 6)
-    @game.scene.add(new Two.RenderNode(elements: [@fpsText]))
-    @game.scene.add(new Two.TransformNode(position: [0, 10])).add new Two.RenderNode(elements: [@objectCountText])
-
-  step: (increment) ->
-    @fpsText.text = "FPS: #{@debugSampler.sample(@game.debug.fps, "fps")}"
-    @objectCountText.text = "Game objects: #{@debugSampler.sample(@game.world.objects.length, "objects")}"
 
 game = new Game()
 game.registerEntity "Player", Player
 game.registerEntity "Shot", Shot
 game.registerEntity "Weapon", Weapon
-game.registerState "main", MainState
+game.registerState "weapon_test", WeaponTestState
 
-game.start("main")
+game.start("weapon_test")
 

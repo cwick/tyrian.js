@@ -7,7 +7,8 @@
     <script>
       require.config({
         paths: {
-          "two": "two.js"
+          "two": "two.js",
+          "jquery": "lib/jquery-2.1.1"
         },
         packages: [{
           name: "two",
@@ -18,6 +19,7 @@
       require(["src/main"]);
     </script>
     <div id="game"></div>
+    <div id="weapon-selector"></div>
   </body>
 </html>
 

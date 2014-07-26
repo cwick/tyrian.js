@@ -19,13 +19,15 @@ function compileTwo() {
 
 function compileTyrian() {
   var src = pickFiles(processCoffeeFiles("src"), { srcDir: "/", destDir: "src" });
-  var dependencies = compileTwo();
+  var lib = pickFiles("lib", { srcDir: "/", destDir: "lib" });
+  var dependencies = [compileTwo(), lib];
+
   var assets = [
     pickFiles("assets", { srcDir: "/", destDir: "/", files: ["index.html"] }),
     pickFiles("converted_data", { srcDir: "/", destDir: "/converted_data" })
   ];
 
-  return mergeTrees([dependencies, src].concat(assets));
+  return mergeTrees(dependencies.concat([src]).concat(assets));
 
 }
 
