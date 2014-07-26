@@ -12,7 +12,7 @@ Weapon = Two.GameObject.extend
     @_fireShot() if @canFireShot
 
   _fireShot: ->
-    @_spawnShot(0)
+    @_spawnShot(x) for x in [0..@weapon.multi-1]
     @canFireShot = false
 
     @game.setTimeout @weapon.shotrepeat / @game.tyrian.TICKS_PER_SECOND, =>

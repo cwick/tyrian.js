@@ -32,10 +32,12 @@ WeaponTestState = BaseState.extend
       $("#power-select").append($("<option>", value: i-1, html: i))
 
     $("#weapon-select").on "change", (e) =>
+      $("#weapon-select").blur()
       $("#power-select").val(0)
       @switchWeapon()
 
     $("#power-select").on "change", (e) =>
+      $("#power-select").blur()
       @switchWeapon()
 
 `export default WeaponTestState`
