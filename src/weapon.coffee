@@ -29,7 +29,7 @@ Weapon = Two.GameObject.extend
     velocityY = -@weapon.sy[shotNumber] * @game.tyrian.TICKS_PER_SECOND
 
     accelerationX = @weapon.accelerationx * Math.pow @game.tyrian.TICKS_PER_SECOND, 2
-    accelerationY = @weapon.acceleration * Math.pow @game.tyrian.TICKS_PER_SECOND, 2
+    accelerationY = -@weapon.acceleration * Math.pow @game.tyrian.TICKS_PER_SECOND, 2
 
     shot = @game.spawn "Shot", spriteNumber: @weapon.sg[shotNumber]
     shot.physics.position = [@transform.parent.position.x + 1 + spawnX, @transform.parent.position.y + spawnY]
