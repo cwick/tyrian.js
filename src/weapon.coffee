@@ -25,7 +25,12 @@ Weapon = Two.GameObject.extend
     spawnX = @weapon.bx[shotNumber]
     spawnY = @weapon.by[shotNumber]
 
-    velocityX = @weapon.sx[shotNumber] * @game.tyrian.TICKS_PER_SECOND
+    # Special case for lasers
+    if @weapon.sx[shotNumber] == 101
+      velocityX = 0
+    else
+      velocityX = @weapon.sx[shotNumber] * @game.tyrian.TICKS_PER_SECOND
+
     velocityY = -@weapon.sy[shotNumber] * @game.tyrian.TICKS_PER_SECOND
 
     accelerationX = @weapon.accelerationx * Math.pow @game.tyrian.TICKS_PER_SECOND, 2
