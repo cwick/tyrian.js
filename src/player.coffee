@@ -23,8 +23,7 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
   spawn: ->
     @physics.position = [100, 180]
     @game.tyrian.layers.ships.add @transform
-    @weapon = @game.spawn "Weapon", weaponNumber: 155
-    @transform.add @weapon.transform
+    @weapon = @game.spawn "Weapon", weaponNumber: 155, attachTo: @
 
   update: ->
     @updateMovement()

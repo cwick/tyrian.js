@@ -28,4 +28,7 @@ Shot = Two.GameObject.extend Two.Components.ArcadePhysics,
     if position.x < -34 || position.x > 290 || position.y < -15 || position.y > 190
       @die()
 
+    if @laserSlave?
+      position.x = @laserSlave.physics.position.x
+
 `export default Shot`
