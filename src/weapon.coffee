@@ -36,13 +36,17 @@ Weapon = Two.GameObject.extend
 
     shot = @game.spawn "Shot", spriteNumber: @weapon.sg[shotNumber]
 
-    # Special case for lasers
-    if @weapon.sx[shotNumber] == 101
+    if @weapon.sx[shotNumber] == 101 || @weapon.sx[shotNumber] == 120
       velocityX = 0
-      shot.laserSlave = @owner
+      shot.slave = @owner
+      shot.matchPosition = true
+
+    if @weapon.sx[shotNumber] == 101
+      shot.matchVelocity = true
 
     shot.physics.position = [@owner.transform.position.x + 1 + spawnX, @owner.transform.position.y + spawnY]
     shot.physics.velocity = [velocityX, velocityY]
+    shot.initialVelocity = [velocityX, velocityY]
     shot.physics.acceleration = [accelerationX, accelerationY]
 
 `export default Weapon`

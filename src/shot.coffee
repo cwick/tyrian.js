@@ -12,6 +12,10 @@ Shot = Two.GameObject.extend Two.Components.ArcadePhysics,
         height: 0
 
     @transform.add new Two.RenderNode(elements: [@shotSprite])
+    @initialVelocity = [0, 0]
+    @matchPosition = false
+    @matchVelocity = false
+    @slave = null
 
   spawn: (options) ->
     shotSpriteFrame = @game.loader.loadObject("player_shots").frames[options.spriteNumber].frame
@@ -28,7 +32,13 @@ Shot = Two.GameObject.extend Two.Components.ArcadePhysics,
     if position.x < -34 || position.x > 290 || position.y < -15 || position.y > 190
       @die()
 
-    if @laserSlave?
-      position.x = @laserSlave.physics.position.x
+    if @slave?
+      slave = @slave.physics
+
+      if @matchPosition
+        position.x = slave.position.x
+
+      if @matchVelocity
+        @physics.velocity.y = slave.velocity.y + @initialVelocity[1]
 
 `export default Shot`
