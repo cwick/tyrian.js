@@ -1,17 +1,8 @@
 require 'json'
+require_relative "file_lib"
 
 WEAP_NUM = 780
 PORT_NUM = 42
-
-JE_longint = [4, "l"]
-JE_integer = [2, "2"]
-JE_shortint = [1, "c"]
-JE_word = [2, "S"]
-JE_byte = [1, "C"]
-
-def efread(type, count, f)
-  f.read(type[0]*count).unpack("#{type[1]}#{count}")
-end
 
 open("../data/tyrian.hdt", "rb") do |f|
   f.seek(efread(JE_longint, 1, f).first)
