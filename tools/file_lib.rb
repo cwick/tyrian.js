@@ -1,5 +1,5 @@
 JE_longint = [4, "l"]
-JE_integer = [2, "2"]
+JE_integer = [2, "s"]
 JE_shortint = [1, "c"]
 JE_word = [2, "S"]
 JE_byte = [1, "C"]

@@ -1,117 +1,55 @@
-def read_encrypted_pascal_string(f)
-  len = f.getbyte
-  if len != nil
-    s = f.read len
-    decrypt_pascal_string(s)
-  end
-end
+require_relative "file_lib"
+require 'json'
 
-def decrypt_pascal_string(s)
-  crypt_key = [ 204, 129, 63, 255, 71, 19, 25, 62, 1, 99 ];
-  bytes = s.bytes
+TYRIAN_LEVEL = 9
 
-  (bytes.length-1).downto(0).each do |i|
-    bytes[i] ^= crypt_key[i % crypt_key.length]
-    bytes[i] ^= bytes[i-1] if i > 0
+def load_level_offsets(f)
+  level_offsets = []
+  level_count = efread(JE_word, 1, f).first
+  level_count.times do
+    level_offsets << efread(JE_longint, 1, f).first
   end
 
-  bytes.pack("c*")
+  level_offsets
 end
 
-def parse_section(s, file)
-  raise "Bad line" unless s[0] == "]"
+open("../data/tyrian1.lvl", "rb") do |f|
+  level_offsets = load_level_offsets(f)
+  level = {}
 
-  commands = []
+  level[:file_offset] = level_offsets[(TYRIAN_LEVEL-1)*2]
 
-  while s != ""
-    code = s[1]
-    parsing_func = $parsing_functions[code]
-    raise "Unknown code '#{code}'" unless parsing_func
+  f.seek level[:file_offset]
 
-    parsed_command = parsing_func.call(s, file)
-    commands << parsed_command if parsed_command
-    s = read_encrypted_pascal_string(file)
+  f.getbyte # char_mapFile
+  level[:shape_file] = [f.getbyte].pack('c*')
+  level[:map_x] = efread(JE_word, 1, f).first
+  level[:map_x2] = efread(JE_word, 1, f).first
+  level[:map_x3] = efread(JE_word, 1, f).first
+  level[:enemies] = []
+  level[:events] = []
+
+  efread(JE_word, 1, f).first.times do
+    level[:enemies] << efread(JE_word, 1, f).first
   end
 
-  $sections << commands
-end
-
-def parse_section_jump(s, file)
-  {
-    command: "section_jump",
-    section: s[3..5].to_i
-  }
-end
-
-def parse_cubes(s, file)
-  {
-    command: "cubes",
-    cubes: s[7..-1].split(" ").map { |x| x.to_i }
-  }
-end
-
-def parse_cube_max(s, file)
-  {
-    command: "cube_max",
-    value: s[4..-1].to_i
-  }
-end
-
-def parse_maps(s, file)
-  {
-    command: "unused"
-  }
-end
-
-def parse_items_available(s, file)
-  9.times { read_encrypted_pascal_string(file) }
-
-  {
-    command: "unused"
-  }
-end
-
-def parse_nothing(s, file)
-  nil
-end
-
-def parse_level(s, file)
-  {
-    command: "level",
-    next_level: s[9..11].to_i,
-    level_name: s[13..21].strip,
-    level_song: s[22..23].to_i,
-    level_file_num: s[25..27].to_i
-  }
-end
-
-$parsing_functions = {
-  "J" => method(:parse_section_jump),
-  "?" => method(:parse_cubes),
-  "!" => method(:parse_cube_max),
-  "G" => method(:parse_maps),
-  "I" => method(:parse_items_available),
-  "h" => method(:parse_nothing),
-  "H" => method(:parse_nothing),
-  "L" => method(:parse_level),
-}
-
-$sections = []
-
-open("../data/levels1.dat", "rb") do |f|
-  begin
-    while s = read_encrypted_pascal_string(f)
-      next if s[0] == "*" || s == ""
-      parse_section(s, f)
-    end
-  rescue => e
-    puts e.inspect
+  efread(JE_word, 1, f).first.times do
+    event = {}
+    event[:event_time] = efread(JE_word, 1, f).first
+    event[:event_type] = efread(JE_byte, 1, f).first
+    event[:event_dat] = efread(JE_integer, 1, f).first
+    event[:event_dat2] = efread(JE_integer, 1, f).first
+    event[:event_dat3] = efread(JE_shortint, 1, f).first
+    event[:event_dat5] = efread(JE_shortint, 1, f).first
+    event[:event_dat6] = efread(JE_shortint, 1, f).first
+    event[:event_dat4] = efread(JE_byte, 1, f).first
+    level[:events] << event
   end
 
-  $sections.each_with_index do |section, i|
-    puts i+1
-    puts section
-    puts
-  end
+  # Swap byte order of shapes
+  level[:shapes] = efread(JE_word, 3*128, f).map do |x| [x].pack("n").unpack("S").first end.each_slice(128).to_a
+  level[:map1] = efread(JE_byte, 300*14, f).each_slice(14).to_a
+  level[:map2] = efread(JE_byte, 600*14, f).each_slice(14).to_a
+  level[:map3] = efread(JE_byte, 600*15, f).each_slice(15).to_a
 end
 
