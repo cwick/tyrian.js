@@ -27,7 +27,7 @@ def dump_tiles(level)
       full_image.push(row.append(false))
     end
 
-    full_image.append(true).write("test_#{layer}.png")
+    full_image.append(true).write("PNG32:test_#{layer}.png")
   end
 
 end

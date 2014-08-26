@@ -23,7 +23,7 @@ def dump_shapes(shape_code)
 
       shape = indexed_to_truecolor(shape)
       image = create_image_from_sprite(width: SHAPE_WIDTH, height: SHAPE_HEIGHT, data: shape)
-      image.write("../converted_data/temp/shapes#{shape_code}/shape_#{z}.png")
+      image.write("PNG32:../converted_data/temp/shapes#{shape_code}/shape_#{z}.png")
     end
   end
 end

@@ -146,7 +146,7 @@ def dump_option_sprites(offsets, f)
   sprites = load_sprites(f)
   sprites.each_with_index do |s, i|
     if s
-      convert_sprite(s).write "../converted_data/temp/option_sprites/#{i}.png"
+      convert_sprite(s).write "PNG32:../converted_data/temp/option_sprites/#{i}.png"
     end
   end
 end
@@ -157,7 +157,7 @@ def dump_font_sprites(offsets, f)
   sprites = load_sprites(f)
   sprites.each_with_index do |s, i|
     if s
-      convert_sprite(s).write "../converted_data/temp/font_sprites/#{i}.png"
+      convert_sprite(s).write "PNG32:../converted_data/temp/font_sprites/#{i}.png"
     end
   end
 end
@@ -168,7 +168,7 @@ def dump_small_font_sprites(offsets, f)
   sprites = load_sprites(f)
   sprites.each_with_index do |s, i|
     if s
-      convert_sprite(s).write "../converted_data/temp/small_font_sprites/#{i}.png"
+      convert_sprite(s).write "PNG32:../converted_data/temp/small_font_sprites/#{i}.png"
     end
   end
 end
@@ -179,7 +179,7 @@ def dump_tiny_font_sprites(offsets, f)
   sprites = load_sprites(f)
   sprites.each_with_index do |s, i|
     if s
-      convert_sprite(s).write "../converted_data/temp/tiny_font_sprites/#{i}.png"
+      convert_sprite(s).write "PNG32:../converted_data/temp/tiny_font_sprites/#{i}.png"
     end
   end
 end
@@ -190,7 +190,7 @@ def dump_planet_sprites(offsets, f)
   sprites = load_sprites(f)
   sprites.each_with_index do |s, i|
     if s
-      convert_sprite(s, 17).write "../converted_data/temp/planet_sprites/#{i}.png"
+      convert_sprite(s, 17).write "PNG32:../converted_data/temp/planet_sprites/#{i}.png"
     end
   end
 end
@@ -201,7 +201,7 @@ def dump_weapon_sprites(offsets, f)
   sprites = load_sprites(f)
   sprites.each_with_index do |s, i|
     if s
-      convert_sprite(s).write "../converted_data/temp/weapon_sprites/#{i}.png"
+      convert_sprite(s).write "PNG32:../converted_data/temp/weapon_sprites/#{i}.png"
     end
   end
 end
@@ -241,7 +241,7 @@ def dump_pics(offsets, f)
       width: 320,
       height: 200,
       data: indexed_to_truecolor(pic_data, pcx_pal[pic_num])
-    }).write "#{out_dir}/#{pic_num}.png"
+    }).write "PNG32:#{out_dir}/#{pic_num}.png"
   end
 end
 

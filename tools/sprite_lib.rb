@@ -62,7 +62,7 @@ def dump_sprites2x2(data, sprites, dirname, palette=0)
   Dir.mkdir out_dir unless File.exists? out_dir
 
   sprites.each do |i|
-    decode_sprite2x2(data, i, palette).write "#{out_dir}/#{i}.png"
+    decode_sprite2x2(data, i, palette).write "PNG32:#{out_dir}/#{i}.png"
   end
 end
 
@@ -73,7 +73,7 @@ def dump_sprites2(data, sprites, dirname, palette=0)
   sprites.each do |i|
     sprite = decode_sprite2(data, i, palette)
     if sprite[:width] > 0 && sprite[:height] > 0
-      create_image_from_sprite(sprite).write "#{out_dir}/#{i}.png"
+      create_image_from_sprite(sprite).write "PNG32:#{out_dir}/#{i}.png"
     end
   end
 end
