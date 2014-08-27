@@ -80,7 +80,7 @@ Trajectory heading intercepts minefield surrounding Deliani.
 
 Navigation through minefield necessary to reach Deliani.
 
-Unknown magnetic forces detected ahead.  
+Unknown magnetic forces detected ahead.
 #
 ]J 012[
 
@@ -399,14 +399,14 @@ Looks like a fairly substantial... oh no!
 ]G[ 01 2 05 041  21 026
 ]I[
  Ship
- WeapF  
- WeapR  
- Power  
- Engine 
- Opt1   
- Opt2   
+ WeapF
+ WeapR
+ Power
+ Engine
+ Opt1
+ Opt2
  Armor
- Shield 
+ Shield
 
 *41SECTION - Extra MiniGame
 ]e[ ENGAGE items
@@ -422,7 +422,7 @@ blown to pieces, flame broiled, and electrocuted one too
 many times. Only your incredible targeting skills and class
 1 fancy flying has kept you alive.
 
-Those boys at Deliani clearly have some even more hair 
+Those boys at Deliani clearly have some even more hair
 raising missions for you up their sleeve. Why were YOU
 chosen to be their errand boy?  Why is half the galaxy after
 your head? Can you beat the odds and, most importantly, can

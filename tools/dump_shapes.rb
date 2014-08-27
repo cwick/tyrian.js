@@ -28,7 +28,6 @@ def dump_shapes(shape_code)
   end
 end
 
-# %w( \) w x y z).each do |code| dump_shapes(code) end
-%w(z).each do |code| dump_shapes(code) end
+%w( \) w x y z).each do |code| dump_shapes(code) end
 
 
