@@ -18,7 +18,7 @@ Shot = Two.GameObject.extend Two.Components.ArcadePhysics,
     @slave = null
 
   spawn: (options) ->
-    shotSpriteFrame = @game.loader.loadObject("player_shots").frames[options.spriteNumber].frame
+    shotSpriteFrame = @game.loader.loadJSON("player_shots").frames[options.spriteNumber].frame
     @shotSprite.crop =
       x: shotSpriteFrame.x
       y: shotSpriteFrame.y

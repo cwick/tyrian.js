@@ -6,14 +6,16 @@ BaseState = Two.State.extend
 
   preload: ->
     @game.loader.preloadImage "player_ships.png"
-    @game.loader.preloadObject "player_ships.json"
+    @game.loader.preloadJSON "player_ships.json"
 
     @game.loader.preloadImage "player_shots.png"
-    @game.loader.preloadObject "player_shots.json"
+    @game.loader.preloadJSON "player_shots.json"
 
     @game.loader.preloadImage "pics/2.png"
-    @game.loader.preloadObject "weapons.json"
-    @game.loader.preloadObject "weapon_ports.json"
+    @game.loader.preloadJSON "weapons.json"
+    @game.loader.preloadJSON "weapon_ports.json"
+
+    @game.loader.preloadSpritesheet "shapes/shapesz"
 
   enter: ->
     @game.scene.removeAll()

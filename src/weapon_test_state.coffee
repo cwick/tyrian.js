@@ -18,7 +18,7 @@ WeaponTestState = BaseState.extend
       <select id="power-select"> </select>
     """)
 
-    @weaponPorts = @game.loader.loadObject("weapon_ports")
+    @weaponPorts = @game.loader.loadJSON("weapon_ports")
     @weaponPorts = (@weaponPorts[k] for k of @weaponPorts).sort((a,b) ->
       return 1 if a.name > b.name
       return -1 if a.name < b.name

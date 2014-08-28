@@ -75,7 +75,7 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
       @physics.velocity.y = 0
 
   loadShip: (num) ->
-    ships = @game.loader.loadObject("player_ships").frames
+    ships = @game.loader.loadJSON("player_ships").frames
     frames = {}
 
     # Set up sprites for ship banking angles

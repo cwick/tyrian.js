@@ -2,7 +2,7 @@
 
 Weapon = Two.GameObject.extend
   initialize: ->
-    @weaponsData = @game.loader.loadObject("weapons")
+    @weaponsData = @game.loader.loadJSON("weapons")
 
   spawn: (options) ->
     @owner = options.attachTo || @owner
