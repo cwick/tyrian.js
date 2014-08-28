@@ -5,23 +5,18 @@ BaseState = Two.State.extend
     @debugSampler = new Two.PeriodicSampler(3)
 
   preload: ->
-    @game.loader.preloadImage "player_ships.png"
-    @game.loader.preloadJSON "player_ships.json"
-
-    @game.loader.preloadImage "player_shots.png"
-    @game.loader.preloadJSON "player_shots.json"
+    @game.loader.preloadSpritesheet "player_ships"
+    @game.loader.preloadSpritesheet "player_shots"
 
     @game.loader.preloadImage "pics/2.png"
     @game.loader.preloadJSON "weapons.json"
     @game.loader.preloadJSON "weapon_ports.json"
 
-    @game.loader.preloadSpritesheet "shapes/shapesz"
-
   enter: ->
     @game.scene.removeAll()
 
     background = @game.scene.add new Two.TransformNode()
-    backgroundSprite = new Two.Sprite(anchorPoint: [0,1], image: @game.loader.loadImage("pics/2"))
+    backgroundSprite = new Two.Sprite(image: @game.loader.loadImage("pics/2"))
     background.add new Two.RenderNode(elements: [backgroundSprite])
 
     @game.scene.add @game.tyrian.viewport

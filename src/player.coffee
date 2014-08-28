@@ -86,7 +86,6 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
     frames[-2] = ships[num-4].frame
 
     shipSprite = new Two.Sprite
-      anchorPoint: [0,1]
       image: @game.loader.loadImage("player_ships")
 
     for name, frame of frames

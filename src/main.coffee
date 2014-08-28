@@ -22,6 +22,8 @@ Game = Two.Game.extend
 
     @loader.baseDir = "converted_data"
 
+    Two.Sprite.defaultAnchorPoint = [0, 1]
+
     @tyrian =
       TICKS_PER_SECOND: 35
       viewport: new Two.TransformNode(position: [-24, 0])

@@ -2,15 +2,7 @@
 
 Shot = Two.GameObject.extend Two.Components.ArcadePhysics,
   initialize: ->
-    @shotSprite = new Two.Sprite
-      anchorPoint: [0,1]
-      image: @game.loader.loadImage("player_shots")
-      crop:
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-
+    @shotSprite = @game.loader.loadSpritesheet("player_shots").clone()
     @transform.add new Two.RenderNode(elements: [@shotSprite])
     @initialVelocity = [0, 0]
     @matchPosition = false
@@ -18,13 +10,7 @@ Shot = Two.GameObject.extend Two.Components.ArcadePhysics,
     @slave = null
 
   spawn: (options) ->
-    shotSpriteFrame = @game.loader.loadJSON("player_shots").frames[options.spriteNumber].frame
-    @shotSprite.crop =
-      x: shotSpriteFrame.x
-      y: shotSpriteFrame.y
-      width: shotSpriteFrame.w
-      height: shotSpriteFrame.h
-
+    @shotSprite.frame = options.spriteNumber
     @game.tyrian.layers.shots.add @transform
 
   update: ->
