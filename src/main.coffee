@@ -25,7 +25,7 @@ Game = Two.Game.extend
     Two.Sprite.defaultAnchorPoint = [0, 1]
 
     @tyrian =
-      TICKS_PER_SECOND: 35
+      TICKS_PER_SECOND: 32
       viewport: new Two.TransformNode(position: [-24, 0])
       layers:
         shots: new Two.TransformNode()

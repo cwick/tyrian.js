@@ -16,9 +16,13 @@ Weapon = Two.GameObject.extend
     @_fireShot() if @canFireShot
 
   _fireShot: ->
-    @_spawnShot(x) for x in [@nextShot..@nextShot+@weapon.multi-1]
-    @nextShot += @weapon.multi
-    @nextShot = 0 if @nextShot == @weapon.max
+    shotsFired = 0
+    while shotsFired < @weapon.multi
+      @_spawnShot(@nextShot)
+      shotsFired++
+      @nextShot++
+      @nextShot = 0 if @nextShot == @weapon.max || @nextShot > 7
+
     @canFireShot = false
 
     @game.setTimeout @weapon.shotrepeat / @game.tyrian.TICKS_PER_SECOND, =>
