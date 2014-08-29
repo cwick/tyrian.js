@@ -72,7 +72,9 @@ def dump_level(f, index, offset)
   level[:map2] = efread(JE_byte, 600*14, f).each_slice(14).to_a
   level[:map3] = efread(JE_byte, 600*15, f).each_slice(15).to_a
 
-  dump_tiles(level)
+  # dump_tiles(level)
+  FileUtils.mkdir_p "../converted_data/levels/ep1"
+  File.write "../converted_data/levels/ep1/#{level[:index]}.json", JSON.pretty_generate(level)
 end
 
 open("../data/tyrian1.lvl", "rb") do |f|
