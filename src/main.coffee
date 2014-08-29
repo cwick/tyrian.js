@@ -15,7 +15,6 @@ Game = Two.Game.extend
     @camera.width = GAME_WIDTH
     @camera.height = GAME_HEIGHT
 
-    @renderer.backend.imageSmoothingEnabled = false
     @renderer.backend.flipYAxis = true
 
     @world.physics.arcade.collideWorldBounds = false
@@ -31,7 +30,6 @@ Game = Two.Game.extend
         shots: new Two.TransformNode()
         ships: new Two.TransformNode()
         background1: new Two.TransformNode()
-
 
 game = new Game()
 game.registerEntity "Player", Player

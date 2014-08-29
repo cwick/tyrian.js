@@ -29,9 +29,15 @@ BaseState = Two.State.extend
     @fpsText.text = "FPS: #{@debugSampler.sample(@game.debug.fps, "fps")}"
     @objectCountText.text = "Game objects: #{@debugSampler.sample(@game.world.entityCount, "objects")}"
 
+  beforeRender: ->
+    @viewportRenderer.render(@game.tyrian.viewport, @viewportCamera)
+
   setupScene: ->
+    @viewportCamera = new Two.Camera(width: 264, height: 184)
+    @viewportRenderer = @createViewportRenderer()
+
     @game.scene.add @createChrome()
-    @game.scene.add @game.tyrian.viewport
+    @game.scene.add @createViewportCanvas()
 
     @game.tyrian.viewport.add @game.tyrian.layers.background1
     @game.tyrian.viewport.add @game.tyrian.layers.shots
@@ -43,6 +49,26 @@ BaseState = Two.State.extend
     chrome = new Two.TransformNode()
     chromeSprite = new Two.Sprite(image: @game.loader.loadImage("pics/2"))
     chrome.add new Two.RenderNode(elements: [chromeSprite])
+
+  createViewportRenderer: ->
+    renderer = new Two.SceneRenderer(backgroundColor: "black")
+    renderer.backend.flipYAxis = true
+    renderer
+
+  createViewportCanvas: ->
+    canvas = @viewportRenderer.backend.canvas
+    canvas.width = @viewportCamera.width
+    canvas.height = @viewportCamera.height
+
+    viewportSprite = new Two.Sprite
+      width: canvas.width
+      height: canvas.height
+      image: canvas.domElement
+
+    transform = new Two.TransformNode()
+    transform.add new Two.RenderNode(elements: [viewportSprite])
+
+    transform
 
   createBackground1: ->
     sprites = @game.loader.loadSpritesheet "shapes/shapesz"
