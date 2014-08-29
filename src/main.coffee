@@ -30,6 +30,7 @@ Game = Two.Game.extend
       layers:
         shots: new Two.TransformNode()
         ships: new Two.TransformNode()
+        background1: new Two.TransformNode()
 
 
 game = new Game()
