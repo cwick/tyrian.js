@@ -17,13 +17,7 @@ BaseState = Two.State.extend
   enter: ->
     @game.scene.removeAll()
 
-    @createChrome()
-    @createBackground1()
-
-    @game.scene.add @game.tyrian.viewport
-    @game.tyrian.viewport.add @game.tyrian.layers.background1
-    @game.tyrian.viewport.add @game.tyrian.layers.shots
-    @game.tyrian.viewport.add @game.tyrian.layers.ships
+    @setupScene()
 
     @game.spawn "Player", name: "Player"
     @fpsText = new Two.Text(fontSize: 6)
@@ -35,8 +29,18 @@ BaseState = Two.State.extend
     @fpsText.text = "FPS: #{@debugSampler.sample(@game.debug.fps, "fps")}"
     @objectCountText.text = "Game objects: #{@debugSampler.sample(@game.world.entityCount, "objects")}"
 
+  setupScene: ->
+    @game.scene.add @createChrome()
+    @game.scene.add @game.tyrian.viewport
+
+    @game.tyrian.viewport.add @game.tyrian.layers.background1
+    @game.tyrian.viewport.add @game.tyrian.layers.shots
+    @game.tyrian.viewport.add @game.tyrian.layers.ships
+
+    @game.tyrian.layers.background1.add @createBackground1()
+
   createChrome: ->
-    chrome = @game.scene.add new Two.TransformNode()
+    chrome = new Two.TransformNode()
     chromeSprite = new Two.Sprite(image: @game.loader.loadImage("pics/2"))
     chrome.add new Two.RenderNode(elements: [chromeSprite])
 
@@ -55,6 +59,6 @@ BaseState = Two.State.extend
         tileTransform.add new Two.RenderNode(elements: [tile])
         background.add tileTransform
 
-      @game.tyrian.layers.background1.add background
+    background
 
 `export default BaseState`
