@@ -20,6 +20,8 @@ BaseState = Two.State.extend
     @setupScene()
 
     @game.spawn "Player", name: "Player"
+    @game.spawn "Background"
+
     @fpsText = new Two.Text(fontSize: 6)
     @objectCountText = new Two.Text(fontSize: 6)
     @game.scene.add(new Two.RenderNode(elements: [@fpsText]))
@@ -42,8 +44,6 @@ BaseState = Two.State.extend
     @game.tyrian.viewport.add @game.tyrian.layers.background1
     @game.tyrian.viewport.add @game.tyrian.layers.shots
     @game.tyrian.viewport.add @game.tyrian.layers.ships
-
-    @game.tyrian.layers.background1.add @createBackground1()
 
   createChrome: ->
     chrome = new Two.TransformNode()
@@ -69,22 +69,5 @@ BaseState = Two.State.extend
     transform.add new Two.RenderNode(elements: [viewportSprite])
 
     transform
-
-  createBackground1: ->
-    sprites = @game.loader.loadSpritesheet "shapes/shapesz"
-    level = @game.loader.loadJSON "levels/ep1/9"
-    console.log level
-
-    background = new Two.TransformNode()
-
-    for rowNumber in [0..7]
-      for columnNumber, tileNumber of level.map1[rowNumber]
-        tile = sprites.clone()
-        tile.frame = level.shapes[0][tileNumber] - 1
-        tileTransform = new Two.TransformNode(position: [columnNumber*24, rowNumber*28])
-        tileTransform.add new Two.RenderNode(elements: [tile])
-        background.add tileTransform
-
-    background
 
 `export default BaseState`

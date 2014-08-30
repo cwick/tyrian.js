@@ -3,6 +3,7 @@
 `import Shot from "./shot"`
 `import Weapon from "./weapon"`
 `import WeaponTestState from "./weapon_test_state"`
+`import Background from "./background"`
 
 Game = Two.Game.extend
   initialize: ->
@@ -35,6 +36,7 @@ game = new Game()
 game.registerEntity "Player", Player
 game.registerEntity "Shot", Shot
 game.registerEntity "Weapon", Weapon
+game.registerEntity "Background", Background
 game.registerState "weapon_test", WeaponTestState
 
 game.start("weapon_test")
