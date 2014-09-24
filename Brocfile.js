@@ -4,6 +4,7 @@ var filterES6Modules = require('broccoli-es6-module-filter');
 var pickFiles = require('broccoli-static-compiler');
 var optimizeRequireJs = require('broccoli-requirejs');
 var env = require('broccoli-env').getEnv();
+var minifyJSON = require('./broccoli_plugins/minify-json');
 
 function processCoffeeFiles(tree) {
   tree = filterCoffeeScript(tree, { bare: true });
@@ -18,7 +19,7 @@ function compileGameEngine() {
   return pickFiles(mergeTrees([dependencies, src]), { srcDir: "/", destDir: "two.js" });
 }
 
-function optimizeForProduction(tree) {
+function optimizeCodeForProduction(tree) {
   return optimizeRequireJs(tree, {
     requirejs: {
       name: 'src/tyrian',
@@ -35,6 +36,10 @@ function optimizeForProduction(tree) {
   });
 }
 
+function optimizeAssetsForProduction(tree) {
+  return minifyJSON(tree);
+}
+
 function compileTyrian() {
   var src = pickFiles(processCoffeeFiles("src"), { srcDir: "/", destDir: "src" });
   var lib = pickFiles("lib", { srcDir: "/", destDir: "lib" });
@@ -46,7 +51,8 @@ function compileTyrian() {
   ]);
 
   if (env == "production") {
-    srcAndDependencies = optimizeForProduction(srcAndDependencies);
+    srcAndDependencies = optimizeCodeForProduction(srcAndDependencies);
+    assets = optimizeAssetsForProduction(assets)
   }
 
   var requirejs = pickFiles("lib", { srcDir: "/", destDir: "/", files: ["require.js"] });
