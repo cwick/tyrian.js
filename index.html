@@ -16,6 +16,21 @@
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+    <script src="require.js"></script>
+    <script>
+      require.config({
+        paths: {
+          "two": "two.js",
+          "jquery": "lib/jquery-2.1.1"
+        },
+        packages: [{
+          name: "two",
+          main: "two.js"
+        }]
+      });
+
+      require(["src/tyrian"]);
+    </script>
   </head>
   <body>
       <div id="header">
