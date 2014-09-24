@@ -44,20 +44,17 @@ function compileTyrian() {
   var src = pickFiles(processCoffeeFiles("src"), { srcDir: "/", destDir: "src" });
   var lib = pickFiles("lib", { srcDir: "/", destDir: "lib" });
   var srcAndDependencies = mergeTrees([src, lib, compileGameEngine()]);
-
-  var assets = mergeTrees([
-    pickFiles("assets", { srcDir: "/", destDir: "/", files: ["index.html"] }),
-    pickFiles("converted_data", { srcDir: "/", destDir: "/converted_data" })
-  ]);
+  var assets = pickFiles("assets", { srcDir: "/", destDir: "/assets" });
+  var gameRunner = pickFiles("standalone", { srcDir: "/", destDir: "/", files: ["index.html"] })
 
   if (env == "production") {
+    var requirejs = pickFiles("lib", { srcDir: "/", destDir: "/lib", files: ["require.js"] });
     srcAndDependencies = optimizeCodeForProduction(srcAndDependencies);
+    srcAndDependencies = mergeTrees([srcAndDependencies, requirejs]);
     assets = optimizeAssetsForProduction(assets)
   }
 
-  var requirejs = pickFiles("lib", { srcDir: "/", destDir: "/", files: ["require.js"] });
-
-  return mergeTrees([requirejs, srcAndDependencies, assets]);
+  return mergeTrees([gameRunner, srcAndDependencies, assets]);
 
 }
 

@@ -3,7 +3,7 @@ require 'json'
 require 'fileutils'
 require 'RMagick'
 
-SHAPES_DIR = "../converted_data/temp/shapes"
+SHAPES_DIR = "../assets/temp/shapes"
 
 def load_level_offsets(f)
   level_offsets = []
@@ -27,8 +27,8 @@ def dump_tiles(level)
       full_image.push(row.append(false))
     end
 
-    FileUtils.mkdir_p "../converted_data/temp/levels/#{level[:index]}"
-    full_image.append(true).write("PNG32:../converted_data/temp/levels/#{level[:index]}/#{layer}.png")
+    FileUtils.mkdir_p "../assets/temp/levels/#{level[:index]}"
+    full_image.append(true).write("PNG32:../assets/temp/levels/#{level[:index]}/#{layer}.png")
   end
 
 end
@@ -73,8 +73,8 @@ def dump_level(f, index, offset)
   level[:map3] = efread(JE_byte, 600*15, f).each_slice(15).to_a
 
   # dump_tiles(level)
-  FileUtils.mkdir_p "../converted_data/levels/ep1"
-  File.write "../converted_data/levels/ep1/#{level[:index]}.json", JSON.pretty_generate(level)
+  FileUtils.mkdir_p "../assets/levels/ep1"
+  File.write "../assets/levels/ep1/#{level[:index]}.json", JSON.pretty_generate(level)
 end
 
 open("../data/tyrian1.lvl", "rb") do |f|

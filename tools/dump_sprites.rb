@@ -141,74 +141,74 @@ def dump_newsh1(data)
 end
 
 def dump_option_sprites(offsets, f)
-  Dir.mkdir "../converted_data/temp/option_sprites" unless File.exists? "../converted_data/temp/option_sprites"
+  Dir.mkdir "../assets/temp/option_sprites" unless File.exists? "../assets/temp/option_sprites"
   f.seek offsets[5]
   sprites = load_sprites(f)
   sprites.each_with_index do |s, i|
     if s
-      convert_sprite(s).write "PNG32:../converted_data/temp/option_sprites/#{i}.png"
+      convert_sprite(s).write "PNG32:../assets/temp/option_sprites/#{i}.png"
     end
   end
 end
 
 def dump_font_sprites(offsets, f)
-  Dir.mkdir "../converted_data/temp/font_sprites" unless File.exists? "../converted_data/temp/font_sprites"
+  Dir.mkdir "../assets/temp/font_sprites" unless File.exists? "../assets/temp/font_sprites"
   f.seek offsets[0]
   sprites = load_sprites(f)
   sprites.each_with_index do |s, i|
     if s
-      convert_sprite(s).write "PNG32:../converted_data/temp/font_sprites/#{i}.png"
+      convert_sprite(s).write "PNG32:../assets/temp/font_sprites/#{i}.png"
     end
   end
 end
 
 def dump_small_font_sprites(offsets, f)
-  Dir.mkdir "../converted_data/temp/small_font_sprites" unless File.exists? "../converted_data/temp/small_font_sprites"
+  Dir.mkdir "../assets/temp/small_font_sprites" unless File.exists? "../assets/temp/small_font_sprites"
   f.seek offsets[1]
   sprites = load_sprites(f)
   sprites.each_with_index do |s, i|
     if s
-      convert_sprite(s).write "PNG32:../converted_data/temp/small_font_sprites/#{i}.png"
+      convert_sprite(s).write "PNG32:../assets/temp/small_font_sprites/#{i}.png"
     end
   end
 end
 
 def dump_tiny_font_sprites(offsets, f)
-  Dir.mkdir "../converted_data/temp/tiny_font_sprites" unless File.exists? "../converted_data/temp/tiny_font_sprites"
+  Dir.mkdir "../assets/temp/tiny_font_sprites" unless File.exists? "../assets/temp/tiny_font_sprites"
   f.seek offsets[2]
   sprites = load_sprites(f)
   sprites.each_with_index do |s, i|
     if s
-      convert_sprite(s).write "PNG32:../converted_data/temp/tiny_font_sprites/#{i}.png"
+      convert_sprite(s).write "PNG32:../assets/temp/tiny_font_sprites/#{i}.png"
     end
   end
 end
 
 def dump_planet_sprites(offsets, f)
-  Dir.mkdir "../converted_data/temp/planet_sprites" unless File.exists? "../converted_data/temp/planet_sprites"
+  Dir.mkdir "../assets/temp/planet_sprites" unless File.exists? "../assets/temp/planet_sprites"
   f.seek offsets[3]
   sprites = load_sprites(f)
   sprites.each_with_index do |s, i|
     if s
-      convert_sprite(s, 17).write "PNG32:../converted_data/temp/planet_sprites/#{i}.png"
+      convert_sprite(s, 17).write "PNG32:../assets/temp/planet_sprites/#{i}.png"
     end
   end
 end
 
 def dump_weapon_sprites(offsets, f)
-  Dir.mkdir "../converted_data/temp/weapon_sprites" unless File.exists? "../converted_data/temp/weapon_sprites"
+  Dir.mkdir "../assets/temp/weapon_sprites" unless File.exists? "../assets/temp/weapon_sprites"
   f.seek offsets[6]
   sprites = load_sprites(f)
   sprites.each_with_index do |s, i|
     if s
-      convert_sprite(s).write "PNG32:../converted_data/temp/weapon_sprites/#{i}.png"
+      convert_sprite(s).write "PNG32:../assets/temp/weapon_sprites/#{i}.png"
     end
   end
 end
 
 def dump_pics(offsets, f)
   pcx_pal = [ 0, 7, 5, 8, 10, 5, 18, 19, 19, 20, 21, 22, 5 ]
-  out_dir = "../converted_data/temp/pics"
+  out_dir = "../assets/temp/pics"
   Dir.mkdir out_dir unless File.exists? out_dir
 
   (0..PCX_NUM-1).each do |pic_num|

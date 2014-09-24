@@ -7,7 +7,7 @@ SHAPE_SIZE = SHAPE_WIDTH * SHAPE_HEIGHT
 MAX_SHAPES = 600
 
 def dump_shapes(shape_code)
-  Dir.mkdir "../converted_data/temp/shapes#{shape_code}" unless File.exists? "../converted_data/temp/shapes#{shape_code}"
+  Dir.mkdir "../assets/temp/shapes#{shape_code}" unless File.exists? "../assets/temp/shapes#{shape_code}"
 
   open("../data/shapes#{shape_code}.dat", "rb") do |f|
     (0..MAX_SHAPES-1).each do |z|
@@ -23,7 +23,7 @@ def dump_shapes(shape_code)
 
       shape = indexed_to_truecolor(shape)
       image = create_image_from_sprite(width: SHAPE_WIDTH, height: SHAPE_HEIGHT, data: shape)
-      image.write("PNG32:../converted_data/temp/shapes#{shape_code}/shape_#{z}.png")
+      image.write("PNG32:../assets/temp/shapes#{shape_code}/shape_#{z}.png")
     end
   end
 end

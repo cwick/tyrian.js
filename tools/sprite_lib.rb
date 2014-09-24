@@ -58,7 +58,7 @@ def decode_sprite2x2(data_string, index, palette=0)
 end
 
 def dump_sprites2x2(data, sprites, dirname, palette=0)
-  out_dir = "../converted_data/temp/#{dirname}"
+  out_dir = "../assets/temp/#{dirname}"
   Dir.mkdir out_dir unless File.exists? out_dir
 
   sprites.each do |i|
@@ -67,7 +67,7 @@ def dump_sprites2x2(data, sprites, dirname, palette=0)
 end
 
 def dump_sprites2(data, sprites, dirname, palette=0)
-  out_dir = "../converted_data/temp/#{dirname}"
+  out_dir = "../assets/temp/#{dirname}"
   Dir.mkdir out_dir unless File.exists? out_dir
 
   sprites.each do |i|
@@ -125,7 +125,7 @@ def create_image_from_sprite(sprite)
 end
 
 def load_palettes
-  JSON.parse File.open("../converted_data/palettes.json").read
+  JSON.parse File.open("../assets/palettes.json").read
 end
 
 def indexed_to_truecolor(indexed_data, palette_index=0)

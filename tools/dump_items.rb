@@ -58,7 +58,7 @@ open("../data/tyrian.hdt", "rb") do |f|
     weapon_ports[i] = weapon_port
   end
 
-  File.open("../converted_data/weapons.json", "w") { |f| f.write JSON.pretty_generate(weapons) }
-  File.open("../converted_data/weapon_ports.json", "w") { |f| f.write JSON.pretty_generate(weapon_ports) }
+  File.open("../assets/weapons.json", "w") { |f| f.write JSON.pretty_generate(weapons) }
+  File.open("../assets/weapon_ports.json", "w") { |f| f.write JSON.pretty_generate(weapon_ports) }
 end
 

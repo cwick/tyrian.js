@@ -20,8 +20,6 @@ Game = Two.Game.extend
 
     @world.physics.arcade.collideWorldBounds = false
 
-    @loader.baseDir = "converted_data"
-
     Two.Sprite.defaultAnchorPoint = [0, 1]
 
     @tyrian =
