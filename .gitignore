@@ -4,5 +4,6 @@ converted_data/temp
 node_modules
 bower_components
 build
+production_build
 tmp
 
