@@ -13,7 +13,7 @@ Shot = Two.GameObject.extend Two.Components.ArcadePhysics,
     @shotSprite.frame = options.spriteNumber
     @game.tyrian.layers.shots.add @transform
 
-  update: ->
+  tick: ->
     position = @physics.position
     if position.x < -34 || position.x > 290 || position.y < -15 || position.y > 190
       @die()

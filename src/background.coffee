@@ -15,7 +15,7 @@ Background = Two.GameObject.extend
         tileTransform.add new Two.RenderNode(elements: [tile])
         @game.tyrian.layers.background1.add tileTransform
 
-  update: ->
+  tick: ->
     player = @game.world.findByName "Player"
     tempW = Math.floor((260 - (player.transform.position.x - 36)) / (260 - 36) * (24 * 3) - 1)
     tempW = (tempW * 2) / 3

@@ -25,7 +25,7 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
     @game.tyrian.layers.ships.add @transform
     @weapon = @game.spawn "Weapon", weaponNumber: 155, attachTo: @
 
-  update: ->
+  tick: ->
     @updateMovement()
     @updateBankAngle()
     @fireShots()

@@ -23,7 +23,7 @@ BaseState = Two.State.extend
     @game.spawn "Player", name: "Player"
     @game.spawn "Background"
 
-  step: (increment) ->
+  tick: (deltaSeconds) ->
     @updateDebugOverlay()
 
   beforeRender: ->
