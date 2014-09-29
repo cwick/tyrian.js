@@ -16,6 +16,25 @@ WeaponTestState = BaseState.extend
       <h1>Weapon Select</h1>
       <select id="weapon-select"> </select>
       <select id="power-select"> </select>
+      <h2>Instructions</h2>
+      <table>
+        <tr>
+          <th>Key</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td>Arrow Keys</td>
+          <td>Move ship</td>
+        </tr>
+        <tr>
+          <td>Spacebar</td>
+          <td>Fire weapon</td>
+        </tr>
+        <tr>
+          <td>D</td>
+          <td>Toggle debug overlay</td>
+        </tr>
+      </table>
     """)
 
     @weaponPorts = @game.loader.loadJSON("weapon_ports")
