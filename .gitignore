@@ -6,4 +6,4 @@ bower_components
 build
 production_build
 tmp
-
+npm-debug.log
