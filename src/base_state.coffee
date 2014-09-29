@@ -2,9 +2,6 @@
 `import DebugOverlay from "./debug_overlay"`
 
 BaseState = Two.State.extend
-  initialize: ->
-    @debugSampler = new Two.PeriodicSampler(3)
-
   preload: ->
     @game.loader.preloadSpritesheet "player_ships"
     @game.loader.preloadSpritesheet "player_shots"
@@ -33,7 +30,7 @@ BaseState = Two.State.extend
     @viewportCamera = new Two.Camera(width: 264, height: 184)
     @viewportRenderer = @createViewportRenderer()
 
-    @game.scene.add @createChrome()
+    @game.scene.add @createGameUI()
     @game.scene.add @createViewportCanvas(@viewportCamera, @viewportRenderer)
 
     @game.tyrian.viewport.add @game.tyrian.layers.background1
@@ -43,7 +40,7 @@ BaseState = Two.State.extend
     @debugOverlay = new DebugOverlay()
     @game.scene.add(@debugOverlay.sceneNode)
 
-  createChrome: ->
+  createGameUI: ->
     chrome = new Two.TransformNode()
     chromeSprite = new Two.Sprite(image: @game.loader.loadImage("pics/2"))
     chrome.add new Two.RenderNode(elements: [chromeSprite])
@@ -69,8 +66,8 @@ BaseState = Two.State.extend
     transform
 
   updateDebugOverlay: ->
-    @debugOverlay.fps = @debugSampler.sample(@game.debug.fps, "fps")
-    @debugOverlay.objectCount = @debugSampler.sample(@game.world.entityCount, "objects")
+    @debugOverlay.fps = @game.debug.fps
+    @debugOverlay.objectCount = @game.world.entityCount
     @debugOverlay.frameTime = @game.debug.frameTime.total
     @debugOverlay.renderTime = @game.debug.frameTime.render
     @debugOverlay.logicTime = @game.debug.frameTime.logic
