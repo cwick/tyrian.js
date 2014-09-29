@@ -71,5 +71,9 @@ BaseState = Two.State.extend
   updateDebugOverlay: ->
     @debugOverlay.fps = @debugSampler.sample(@game.debug.fps, "fps")
     @debugOverlay.objectCount = @debugSampler.sample(@game.world.entityCount, "objects")
+    @debugOverlay.frameTime = @game.debug.frameTime.total
+    @debugOverlay.renderTime = @game.debug.frameTime.render
+    @debugOverlay.logicTime = @game.debug.frameTime.logic
+    @debugOverlay.physicsTime = @game.debug.frameTime.physics
 
 `export default BaseState`
