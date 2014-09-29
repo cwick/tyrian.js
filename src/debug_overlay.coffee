@@ -12,6 +12,7 @@ DebugOverlay = Two.Object.extend
     @_physicsTimeText = @_fpsText.clone()
     @_logicTimeText = @_fpsText.clone()
     @_drawImageText = @_fpsText.clone()
+    @_playerPositionText = @_fpsText.clone()
 
     @sceneNode = new Two.TransformNode()
     @_addText(@_objectCountText, [0, 10])
@@ -21,6 +22,7 @@ DebugOverlay = Two.Object.extend
     @_addText(@_logicTimeText, [6, 40])
     @_addText(@_physicsTimeText, [6, 50])
     @_addText(@_drawImageText, [0, 60])
+    @_addText(@_playerPositionText, [150, 190])
 
   frameTime: Two.Property
     set: (value) ->
@@ -54,6 +56,9 @@ DebugOverlay = Two.Object.extend
 
   drawImageCalls: Two.Property
     set: (value) -> @_drawImageText.text = "drawImage calls: #{@_sampler.sample(value, "drawImage")}"
+
+  playerPosition: Two.Property
+    set: (value) -> @_playerPositionText.text = "Player X: #{value.x.toFixed(2)} Y: #{value.y.toFixed(2)}"
 
   _addText: (text, position) ->
     @sceneNode.add(new Two.TransformNode(position: position)).add new Two.RenderNode(elements: [text])

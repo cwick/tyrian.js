@@ -23,6 +23,9 @@ BaseState = Two.State.extend
   tick: (deltaSeconds) ->
     @updateDebugOverlay()
 
+    if @game.input.keyboard.wasKeyPressed(Two.Keys.D)
+      @debugOverlay.sceneNode.enabled = !@debugOverlay.sceneNode.enabled
+
   beforeRender: ->
     @viewportRenderer.render(@game.tyrian.viewport, @viewportCamera)
 
@@ -38,6 +41,7 @@ BaseState = Two.State.extend
     @game.tyrian.viewport.add @game.tyrian.layers.ships
 
     @debugOverlay = new DebugOverlay()
+    @debugOverlay.sceneNode.enabled = false
     @game.scene.add(@debugOverlay.sceneNode)
 
   createGameUI: ->
@@ -73,5 +77,6 @@ BaseState = Two.State.extend
     @debugOverlay.logicTime = @game.debug.frameTime.logic
     @debugOverlay.physicsTime = @game.debug.frameTime.physics
     @debugOverlay.drawImageCalls = @game.debug.callCounter.drawImage
+    @debugOverlay.playerPosition = @game.world.findByName("Player").transform.position
 
 `export default BaseState`
