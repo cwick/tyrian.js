@@ -1,4 +1,5 @@
 `module Two from "two"`
+`import DebugOverlay from "./debug_overlay"`
 
 BaseState = Two.State.extend
   initialize: ->
@@ -22,14 +23,8 @@ BaseState = Two.State.extend
     @game.spawn "Player", name: "Player"
     @game.spawn "Background"
 
-    @fpsText = new Two.Text(fontSize: 6)
-    @objectCountText = new Two.Text(fontSize: 6)
-    @game.scene.add(new Two.RenderNode(elements: [@fpsText]))
-    @game.scene.add(new Two.TransformNode(position: [0, 10])).add new Two.RenderNode(elements: [@objectCountText])
-
   step: (increment) ->
-    @fpsText.text = "FPS: #{@debugSampler.sample(@game.debug.fps, "fps")}"
-    @objectCountText.text = "Game objects: #{@debugSampler.sample(@game.world.entityCount, "objects")}"
+    @updateDebugOverlay()
 
   beforeRender: ->
     @viewportRenderer.render(@game.tyrian.viewport, @viewportCamera)
@@ -39,11 +34,14 @@ BaseState = Two.State.extend
     @viewportRenderer = @createViewportRenderer()
 
     @game.scene.add @createChrome()
-    @game.scene.add @createViewportCanvas()
+    @game.scene.add @createViewportCanvas(@viewportCamera, @viewportRenderer)
 
     @game.tyrian.viewport.add @game.tyrian.layers.background1
     @game.tyrian.viewport.add @game.tyrian.layers.shots
     @game.tyrian.viewport.add @game.tyrian.layers.ships
+
+    @debugOverlay = new DebugOverlay()
+    @game.scene.add(@debugOverlay.sceneNode)
 
   createChrome: ->
     chrome = new Two.TransformNode()
@@ -55,10 +53,10 @@ BaseState = Two.State.extend
     renderer.backend.flipYAxis = true
     renderer
 
-  createViewportCanvas: ->
-    canvas = @viewportRenderer.backend.canvas
-    canvas.width = @viewportCamera.width
-    canvas.height = @viewportCamera.height
+  createViewportCanvas: (camera, renderer) ->
+    canvas = renderer.backend.canvas
+    canvas.width = camera.width
+    canvas.height = camera.height
 
     viewportSprite = new Two.Sprite
       width: canvas.width
@@ -69,5 +67,9 @@ BaseState = Two.State.extend
     transform.add new Two.RenderNode(elements: [viewportSprite])
 
     transform
+
+  updateDebugOverlay: ->
+    @debugOverlay.fps = @debugSampler.sample(@game.debug.fps, "fps")
+    @debugOverlay.objectCount = @debugSampler.sample(@game.world.entityCount, "objects")
 
 `export default BaseState`
