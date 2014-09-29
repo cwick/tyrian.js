@@ -16,12 +16,9 @@ WeaponTestState = BaseState.extend
       <h1>Weapon Select</h1>
       <select id="weapon-select"> </select>
       <select id="power-select"> </select>
+      <br>
       <h2>Instructions</h2>
       <table>
-        <tr>
-          <th>Key</th>
-          <th>Description</th>
-        </tr>
         <tr>
           <td>Arrow Keys</td>
           <td>Move ship</td>
