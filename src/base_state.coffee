@@ -72,5 +72,6 @@ BaseState = Two.State.extend
     @debugOverlay.renderTime = @game.debug.frameTime.render
     @debugOverlay.logicTime = @game.debug.frameTime.logic
     @debugOverlay.physicsTime = @game.debug.frameTime.physics
+    @debugOverlay.drawImageCalls = @game.debug.callCounter.drawImage
 
 `export default BaseState`

@@ -11,6 +11,7 @@ DebugOverlay = Two.Object.extend
     @_renderTimeText = @_fpsText.clone()
     @_physicsTimeText = @_fpsText.clone()
     @_logicTimeText = @_fpsText.clone()
+    @_drawImageText = @_fpsText.clone()
 
     @sceneNode = new Two.TransformNode()
     @_addText(@_objectCountText, [0, 10])
@@ -19,6 +20,7 @@ DebugOverlay = Two.Object.extend
     @_addText(@_renderTimeText, [6, 30])
     @_addText(@_logicTimeText, [6, 40])
     @_addText(@_physicsTimeText, [6, 50])
+    @_addText(@_drawImageText, [0, 60])
 
   frameTime: Two.Property
     set: (value) ->
@@ -27,8 +29,13 @@ DebugOverlay = Two.Object.extend
 
       value = @_sampler.sample(value, "frame")
       @_frameTimeText.text = "Frame: #{value}ms"
-      @_frameTimeText.color = "yellow" if value > POOR_PERFORMANCE_THRESHOLD
-      @_frameTimeText.color = "red" if value > TERRIBLE_PERFORMANCE_THRESHOLD
+
+      if value > TERRIBLE_PERFORMANCE_THRESHOLD
+        @_frameTimeText.color = "red"
+      else if value > POOR_PERFORMANCE_THRESHOLD
+        @_frameTimeText.color = "yellow"
+      else
+        @_frameTimeText.color = "white"
 
   logicTime: Two.Property
     set: (value) -> @_logicTimeText.text = "Logic: #{@_sampler.sample(value, "logic")}ms"
@@ -44,6 +51,9 @@ DebugOverlay = Two.Object.extend
 
   objectCount: Two.Property
     set: (value) -> @_objectCountText.text = "Game objects: #{@_sampler.sample(value, "objects")}"
+
+  drawImageCalls: Two.Property
+    set: (value) -> @_drawImageText.text = "drawImage calls: #{@_sampler.sample(value, "drawImage")}"
 
   _addText: (text, position) ->
     @sceneNode.add(new Two.TransformNode(position: position)).add new Two.RenderNode(elements: [text])
