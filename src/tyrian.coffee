@@ -40,5 +40,5 @@ class GameDelegate
 
 game = new Two.Game(delegate: new GameDelegate())
 
-game.start("weapon_test")
+game.startFromInitialState("weapon_test")
 
