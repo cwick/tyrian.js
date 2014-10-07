@@ -5,16 +5,21 @@
 `import WeaponTestState from "./weapon_test_state"`
 `import Background from "./background"`
 
+constants =
+  SCREEN_WIDTH: 320
+  SCREEN_HEIGHT: 200
+  BG_TILE_WIDTH: 24
+  BG_TILE_HEIGHT: 28
+  TICKS_PER_SECOND: 32
+
 Game = Two.Game.extend
   initialize: ->
     scale = 2
-    GAME_WIDTH = 320
-    GAME_HEIGHT = 200
 
-    @canvas.width = GAME_WIDTH * scale
-    @canvas.height = GAME_HEIGHT * scale
-    @camera.width = GAME_WIDTH
-    @camera.height = GAME_HEIGHT
+    @canvas.width = constants.SCREEN_WIDTH * scale
+    @canvas.height = constants.SCREEN_HEIGHT * scale
+    @camera.width = constants.SCREEN_WIDTH
+    @camera.height = constants.SCREEN_HEIGHT
 
     @renderer.backend.flipYAxis = true
 
@@ -23,12 +28,13 @@ Game = Two.Game.extend
     Two.Sprite.defaultAnchorPoint = [0, 1]
 
     @tyrian =
-      TICKS_PER_SECOND: 32
-      viewport: new Two.TransformNode(position: [-24, 0])
+      viewport: new Two.TransformNode(position: [-constants.BG_TILE_WIDTH, 0])
       layers:
         shots: new Two.TransformNode()
         ships: new Two.TransformNode()
         background1: new Two.TransformNode()
+
+    @tyrian[k] = v for k,v of constants
 
 game = new Game()
 game.registerEntity "Player", Player

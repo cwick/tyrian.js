@@ -1,22 +1,42 @@
 `module Two from "two"`
 
+TiledBackground = Two.Object.extend
+  ONSCREEN_ROW_COUNT: 6
+
+  pushRenderCommands: (commands, worldTransform) ->
+    # Begin drawing tiles at bottom of screen
+    worldTransform.translate(0, @game.tyrian.BG_TILE_HEIGHT*@ONSCREEN_ROW_COUNT)
+
+    numRows = @tiles.map1.length
+    startRow = numRows - Math.floor(@background.yPosition / @game.tyrian.BG_TILE_HEIGHT) - 1
+    endRow = startRow - @ONSCREEN_ROW_COUNT - 1
+
+    for rowNumber in [startRow..endRow]
+      break if rowNumber < 0
+
+      for columnNumber, tileNumber of @tiles.map1[rowNumber]
+        @spriteSheet.frame = @tiles.shapes[0][tileNumber] - 1
+
+        tileTransform = worldTransform.clone()
+        tileTransform.translate(columnNumber * @game.tyrian.BG_TILE_WIDTH,
+                                (numRows - rowNumber - 1) * -@game.tyrian.BG_TILE_HEIGHT)
+
+        @spriteSheet.pushRenderCommands(commands, tileTransform)
+
 Background = Two.GameObject.extend
   spawn: ->
-    @yPosition = 0
-
     sprites = @game.loader.loadSpritesheet "shapes/shapesz"
-    level = @game.loader.loadJSON "levels/ep1/9"
+    tiles = @game.loader.loadJSON "levels/ep1/9"
+    background = new Two.RenderNode(elements: [
+      new TiledBackground(spriteSheet: sprites, tiles: tiles, background: @, game: @game)])
 
-    for rowNumber in [283..299]
-      for columnNumber, tileNumber of level.map1[rowNumber]
-        tile = sprites.clone()
-        tile.frame = level.shapes[0][tileNumber] - 1
-        tileTransform = new Two.TransformNode(position: [columnNumber*24, (rowNumber-283-10)*28])
-        tileTransform.add new Two.RenderNode(elements: [tile])
-        @game.tyrian.layers.background1.add tileTransform
+    @game.tyrian.layers.background1.add background
+    @yPosition = 0
 
   tick: ->
     player = @game.world.findByName "Player"
+
+    # Crazy math taken from OpenTyrian source code. No idea how it works.
     tempW = Math.floor((260 - (player.transform.position.x - 36)) / (260 - 36) * (24 * 3) - 1)
     tempW = (tempW * 2) / 3
     tempW = tempW / 2
@@ -25,6 +45,6 @@ Background = Two.GameObject.extend
     @yPosition += @game.tyrian.TICKS_PER_SECOND / 60
 
     @game.tyrian.layers.background1.position.x = tempW - 24*2
-    @game.tyrian.layers.background1.position.y = Math.round(@yPosition)
+    @game.tyrian.layers.background1.position.y = @yPosition
 
 `export default Background`
