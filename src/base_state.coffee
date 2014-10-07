@@ -5,7 +5,7 @@
 `import Weapon from "./weapon"`
 `import Background from "./background"`
 
-BaseState = Two.State.extend
+BaseState = Two.GameState.extend
   preload: ->
     @game.loader.preloadSpritesheet "player_ships"
     @game.loader.preloadSpritesheet "player_shots"
