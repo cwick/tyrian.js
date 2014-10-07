@@ -6,7 +6,7 @@
 `import Background from "./background"`
 
 BaseState = Two.GameState.extend
-  preload: ->
+  stateWillPreloadAssets: ->
     @game.loader.preloadSpritesheet "player_ships"
     @game.loader.preloadSpritesheet "player_shots"
     @game.loader.preloadSpritesheet "shapes/shapesz"
@@ -16,7 +16,7 @@ BaseState = Two.GameState.extend
     @game.loader.preloadJSON "weapon_ports.json"
     @game.loader.preloadJSON "levels/ep1/9.json"
 
-  enter: ->
+  stateWillEnter: ->
     @registerEntities()
     @game.scene.removeAll()
 
@@ -25,13 +25,13 @@ BaseState = Two.GameState.extend
     @game.spawn "Player", name: "Player"
     @game.spawn "Background"
 
-  tick: (deltaSeconds) ->
+  stateWillTick: (deltaSeconds) ->
     @updateDebugOverlay()
 
     if @game.input.keyboard.wasKeyPressed(Two.Keys.D)
       @debugOverlay.sceneNode.enabled = !@debugOverlay.sceneNode.enabled
 
-  beforeRender: ->
+  sceneWillRender: ->
     @viewportRenderer.render(@game.tyrian.viewport, @viewportCamera)
 
   setupScene: ->
