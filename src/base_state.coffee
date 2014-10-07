@@ -1,5 +1,9 @@
 `module Two from "two"`
 `import DebugOverlay from "./debug_overlay"`
+`import Player from "./player"`
+`import Shot from "./shot"`
+`import Weapon from "./weapon"`
+`import Background from "./background"`
 
 BaseState = Two.State.extend
   preload: ->
@@ -13,6 +17,7 @@ BaseState = Two.State.extend
     @game.loader.preloadJSON "levels/ep1/9.json"
 
   enter: ->
+    @registerEntities()
     @game.scene.removeAll()
 
     @setupScene()
@@ -78,5 +83,11 @@ BaseState = Two.State.extend
     @debugOverlay.physicsTime = @game.debug.frameTime.physics
     @debugOverlay.drawImageCalls = @game.debug.callCounter.drawImage
     @debugOverlay.playerPosition = @game.world.findByName("Player").transform.position
+
+  registerEntities: ->
+    @game.registerEntity "Player", Player
+    @game.registerEntity "Shot", Shot
+    @game.registerEntity "Weapon", Weapon
+    @game.registerEntity "Background", Background
 
 `export default BaseState`
