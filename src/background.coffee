@@ -23,6 +23,7 @@ TiledBackground = Two.Object.extend
         tileTransform.translate(columnNumber * @game.tyrian.BG_TILE_WIDTH,
                                 (numRows - rowNumber - 1) * -@game.tyrian.BG_TILE_HEIGHT)
 
+        commands.push { name: "setTransform", matrix: tileTransform }
         commands.push @spriteSheet.generateRenderCommands()
 
     commands
@@ -34,7 +35,7 @@ Background = Two.GameObject.extend
     background = new Two.RenderNode(renderable:
       new TiledBackground(spriteSheet: sprites, tiles: tiles, background: @, game: @game))
 
-    # @game.tyrian.layers.background1.add background
+    @game.tyrian.layers.background1.add background
     @yPosition = 0
 
   tick: ->
