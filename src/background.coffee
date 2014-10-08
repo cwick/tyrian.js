@@ -5,9 +5,9 @@ TiledBackground = Two.Renderable.extend
 
   generateRenderCommands: ->
     commands = []
-    worldTransform = new Two.Matrix2d()
+    worldTransform = @game.tyrian.layers.background1.worldMatrix.clone()
     # Begin drawing tiles at bottom of screen
-    worldTransform.translate(0, @game.tyrian.BG_TILE_HEIGHT*@ONSCREEN_ROW_COUNT + @background.yPosition)
+    worldTransform.translate(0, @game.tyrian.BG_TILE_HEIGHT*@ONSCREEN_ROW_COUNT)
 
     numRows = @tiles.map1.length
     startRow = numRows - Math.floor(@background.yPosition / @game.tyrian.BG_TILE_HEIGHT) - 1
