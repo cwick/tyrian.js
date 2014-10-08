@@ -12,16 +12,18 @@ DebugOverlay = Two.Object.extend
     @_physicsTimeText = @_fpsText.clone()
     @_logicTimeText = @_fpsText.clone()
     @_drawImageText = @_fpsText.clone()
+    @_renderCommandsText = @_fpsText.clone()
     @_playerPositionText = @_fpsText.clone()
 
     @sceneNode = new Two.TransformNode()
-    @_addText(@_objectCountText, [0, 10])
+    @_addText(@_objectCountText, [0, 155])
     @_addText(@_fpsText, [0, 0])
-    @_addText(@_frameTimeText, [0, 20])
-    @_addText(@_renderTimeText, [6, 30])
-    @_addText(@_logicTimeText, [6, 40])
-    @_addText(@_physicsTimeText, [6, 50])
-    @_addText(@_drawImageText, [0, 60])
+    @_addText(@_frameTimeText, [0, 10])
+    @_addText(@_renderTimeText, [6, 20])
+    @_addText(@_logicTimeText, [6, 30])
+    @_addText(@_physicsTimeText, [6, 40])
+    @_addText(@_drawImageText, [0, 175])
+    @_addText(@_renderCommandsText, [0, 165])
     @_addText(@_playerPositionText, [150, 190])
 
   frameTime: Two.Property
@@ -56,6 +58,9 @@ DebugOverlay = Two.Object.extend
 
   drawImageCalls: Two.Property
     set: (value) -> @_drawImageText.text = "drawImage calls: #{@_sampler.sample(value, "drawImage")}"
+
+  renderCommands: Two.Property
+    set: (value) -> @_renderCommandsText.text = "Render commands: #{@_sampler.sample(value, "renderCommands")}"
 
   playerPosition: Two.Property
     set: (value) -> @_playerPositionText.text = "Player X: #{value.x.toFixed(2)} Y: #{value.y.toFixed(2)}"
