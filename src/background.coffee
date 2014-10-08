@@ -1,17 +1,15 @@
 `module Two from "two"`
 
 TiledBackground = Two.Renderable.extend
-  ONSCREEN_ROW_COUNT: 6
-
   generateRenderCommands: ->
-    commands = []
-    worldTransform = @game.tyrian.layers.background1.worldMatrix.clone()
-    # Begin drawing tiles at bottom of screen
-    worldTransform.translate(0, @game.tyrian.BG_TILE_HEIGHT*@ONSCREEN_ROW_COUNT)
+    BG_TILE_WIDTH = @game.tyrian.BG_TILE_WIDTH
+    BG_TILE_HEIGHT = @game.tyrian.BG_TILE_HEIGHT
+    ONSCREEN_ROW_COUNT = 6
 
+    commands = []
     numRows = @tiles.map1.length
-    startRow = numRows - Math.floor(@background.yPosition / @game.tyrian.BG_TILE_HEIGHT) - 1
-    endRow = startRow - @ONSCREEN_ROW_COUNT - 1
+    startRow = numRows - Math.floor(@background.yPosition / BG_TILE_HEIGHT) - 1
+    endRow = startRow - ONSCREEN_ROW_COUNT - 1
 
     for rowNumber in [startRow..endRow]
       break if rowNumber < 0
@@ -19,12 +17,15 @@ TiledBackground = Two.Renderable.extend
       for columnNumber, tileNumber of @tiles.map1[rowNumber]
         @spriteSheet.frame = @tiles.shapes[0][tileNumber] - 1
 
-        tileTransform = worldTransform.clone()
-        tileTransform.translate(columnNumber * @game.tyrian.BG_TILE_WIDTH,
-                                (numRows - rowNumber - 1) * -@game.tyrian.BG_TILE_HEIGHT)
+        tileTransform = new Two.Matrix2d()
+        tileTransform.translate(0, BG_TILE_HEIGHT*ONSCREEN_ROW_COUNT)
+        tileTransform.translate(columnNumber * BG_TILE_WIDTH,
+                                (numRows - rowNumber - 1) * -BG_TILE_HEIGHT)
 
-        commands.push { name: "setTransform", matrix: tileTransform }
+        commands.push { name: "pushTransform" }
+        commands.push { name: "transform", matrix: tileTransform }
         commands.push @spriteSheet.generateRenderCommands()
+        commands.push { name: "popTransform" }
 
     commands
 
