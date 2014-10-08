@@ -52,7 +52,7 @@ BaseState = Two.GameState.extend
   createGameUI: ->
     chrome = new Two.TransformNode()
     chromeSprite = new Two.Sprite(image: @game.loader.loadImage("pics/2"))
-    chrome.add new Two.RenderNode(elements: [chromeSprite])
+    chrome.add new Two.RenderNode(renderable: chromeSprite)
 
   createViewportRenderer: ->
     renderer = new Two.SceneRenderer(backgroundColor: "black")
@@ -64,13 +64,13 @@ BaseState = Two.GameState.extend
     canvas.width = camera.width
     canvas.height = camera.height
 
-    viewportSprite = new Two.Sprite
-      width: canvas.width
-      height: canvas.height
-      image: canvas.domElement
+    viewportSprite = new Two.Sprite(image: canvas.domElement)
 
     transform = new Two.TransformNode()
-    transform.add new Two.RenderNode(elements: [viewportSprite])
+    transform.add new Two.RenderNode
+      renderable: viewportSprite
+      width: canvas.width
+      height: canvas.height
 
     transform
 

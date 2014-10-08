@@ -3,7 +3,9 @@
 TiledBackground = Two.Object.extend
   ONSCREEN_ROW_COUNT: 6
 
-  pushRenderCommands: (commands, worldTransform) ->
+  generateRenderCommands: ->
+    commands = []
+    worldTransform = new Two.Matrix2d()
     # Begin drawing tiles at bottom of screen
     worldTransform.translate(0, @game.tyrian.BG_TILE_HEIGHT*@ONSCREEN_ROW_COUNT)
 
@@ -21,16 +23,18 @@ TiledBackground = Two.Object.extend
         tileTransform.translate(columnNumber * @game.tyrian.BG_TILE_WIDTH,
                                 (numRows - rowNumber - 1) * -@game.tyrian.BG_TILE_HEIGHT)
 
-        @spriteSheet.pushRenderCommands(commands, tileTransform)
+        commands.push @spriteSheet.generateRenderCommands()
+
+    commands
 
 Background = Two.GameObject.extend
   spawn: ->
     sprites = @game.loader.loadSpritesheet "shapes/shapesz"
     tiles = @game.loader.loadJSON "levels/ep1/9"
-    background = new Two.RenderNode(elements: [
-      new TiledBackground(spriteSheet: sprites, tiles: tiles, background: @, game: @game)])
+    background = new Two.RenderNode(renderable:
+      new TiledBackground(spriteSheet: sprites, tiles: tiles, background: @, game: @game))
 
-    @game.tyrian.layers.background1.add background
+    # @game.tyrian.layers.background1.add background
     @yPosition = 0
 
   tick: ->

@@ -3,7 +3,7 @@
 Shot = Two.GameObject.extend Two.Components.ArcadePhysics,
   initialize: ->
     @shotSprite = @game.loader.loadSpritesheet("player_shots").clone()
-    @transform.add new Two.RenderNode(elements: [@shotSprite])
+    @transform.add new Two.RenderNode(renderable: @shotSprite)
     @initialVelocity = [0, 0]
     @matchPosition = false
     @matchVelocity = false

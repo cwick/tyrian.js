@@ -6,7 +6,7 @@ Player = Two.GameObject.extend Two.Components.ArcadePhysics,
 
     @shipSprite = @loadShip 233
 
-    tyrianOrigin.add new Two.RenderNode(elements: [@shipSprite])
+    tyrianOrigin.add new Two.RenderNode(renderable: @shipSprite)
 
     @physics.boundingBox.fromSprite @shipSprite
     @physics.boundingBox.y *= -1
