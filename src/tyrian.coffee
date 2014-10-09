@@ -20,8 +20,6 @@ class GameDelegate
     game.camera.width = constants.SCREEN_WIDTH
     game.camera.height = constants.SCREEN_HEIGHT
 
-    game.renderer.backend.flipYAxis = true
-
     game.world.physics.arcade.collideWorldBounds = false
 
     Two.Sprite.defaultAnchorPoint = [0, 1]

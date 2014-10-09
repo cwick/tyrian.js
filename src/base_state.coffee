@@ -56,7 +56,6 @@ BaseState = Two.GameState.extend
 
   createViewportRenderer: ->
     renderer = new Two.SceneRenderer(backgroundColor: "black")
-    renderer.backend.flipYAxis = true
     renderer
 
   createViewportCanvas: (camera, renderer) ->
