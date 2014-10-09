@@ -22,10 +22,8 @@ TiledBackground = Two.Renderable.extend
         tileTransform.translate(columnNumber * BG_TILE_WIDTH,
                                 (numRows - rowNumber - 1) * -BG_TILE_HEIGHT)
 
-        commands.push { name: "pushTransform" }
-        commands.push { name: "transform", matrix: tileTransform }
+        commands.push { name: "setTransform", matrix: tileTransform }
         commands.push @spriteSheet.generateRenderCommands()
-        commands.push { name: "popTransform" }
 
     commands
 
