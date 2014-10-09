@@ -17,7 +17,7 @@ BaseState = Two.GameState.extend
     @game.loader.preloadJSON "levels/ep1/9.json"
 
   stateWillEnter: ->
-    @registerEntities()
+    @registerGameObjects()
     @game.scene.removeAll()
 
     @setupScene()
@@ -75,7 +75,7 @@ BaseState = Two.GameState.extend
 
   updateDebugOverlay: ->
     @debugOverlay.fps = @game.debug.fps
-    @debugOverlay.objectCount = @game.world.entityCount
+    @debugOverlay.objectCount = @game.world.gameObjectCount
     @debugOverlay.frameTime = @game.debug.frameTime.total
     @debugOverlay.renderTime = @game.debug.frameTime.render
     @debugOverlay.logicTime = @game.debug.frameTime.logic
@@ -84,10 +84,10 @@ BaseState = Two.GameState.extend
     @debugOverlay.renderCommands = @game.debug.counters.renderCommands
     @debugOverlay.playerPosition = @game.world.findByName("Player").transform.position
 
-  registerEntities: ->
-    @game.registerEntity "Player", Player
-    @game.registerEntity "Shot", Shot
-    @game.registerEntity "Weapon", Weapon
-    @game.registerEntity "Background", Background
+  registerGameObjects: ->
+    @game.registerGameObject "Player", Player
+    @game.registerGameObject "Shot", Shot
+    @game.registerGameObject "Weapon", Weapon
+    @game.registerGameObject "Background", Background
 
 `export default BaseState`

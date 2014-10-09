@@ -12,7 +12,7 @@ class GameDelegate
   domElementForGame: ->
     document.getElementById("tyrian-game")
 
-  gameWillInitialize: (game) ->
+  gameDidInitialize: (game) ->
     scale = 2
 
     game.canvas.width = constants.SCREEN_WIDTH * scale
@@ -33,7 +33,6 @@ class GameDelegate
 
     game.tyrian[k] = v for k,v of constants
 
-  gameDidInitialize: (game) ->
     game.registerState "weapon_test", WeaponTestState
 
 game = new Two.Game(delegate: new GameDelegate())
