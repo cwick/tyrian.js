@@ -16,7 +16,7 @@ BaseState = Two.GameState.extend
     @game.loader.preloadJSON "weapon_ports.json"
     @game.loader.preloadJSON "levels/ep1/9.json"
 
-  stateWillEnter: ->
+  stateDidEnter: ->
     @registerGameObjects()
     @game.scene.removeAll()
 
@@ -82,7 +82,7 @@ BaseState = Two.GameState.extend
     @debugOverlay.physicsTime = @game.debug.frameTime.physics
     @debugOverlay.drawImageCalls = @game.debug.counters.drawImage
     @debugOverlay.renderCommands = @game.debug.counters.renderCommands
-    @debugOverlay.playerPosition = @game.world.findByName("Player").transform.position
+    @debugOverlay.playerPosition = @game.world.findByName("Player").transform.node.position
 
   registerGameObjects: ->
     @game.registerGameObject "Player", Player

@@ -8,8 +8,8 @@ WeaponTestState = BaseState.extend
 
     @game.world.findByName("Player").switchWeapon weapon.op[0][power]
 
-  stateWillEnter: ->
-    @super(BaseState, "stateWillEnter", arguments)
+  stateDidEnter: ->
+    @super(BaseState, "stateDidEnter", arguments)
 
     weaponSelect = $("#weapon-selector")
     weaponSelect.html("""
