@@ -41,7 +41,7 @@ Background = Two.GameObject.extend
     player = @game.world.findByName "Player"
 
     # Crazy math taken from OpenTyrian source code. No idea how it works.
-    tempW = Math.floor((260 - (player.transform.node.position.x - 36)) / (260 - 36) * (24 * 3) - 1)
+    tempW = Math.floor((260 - (player.transform.position.x - 36)) / (260 - 36) * (24 * 3) - 1)
     tempW = (tempW * 2) / 3
     tempW = tempW / 2
     tempW = Math.floor(tempW)

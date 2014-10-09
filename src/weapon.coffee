@@ -48,10 +48,10 @@ Weapon = Two.GameObject.extend
     if @weapon.sx[shotNumber] == 101
       shot.matchVelocity = true
 
-    shot.physics.body.position = [@owner.transform.node.position.x + 1 + spawnX,
-      @owner.transform.node.position.y + spawnY]
-    shot.physics.body.velocity = [velocityX, velocityY]
+    shot.physics.position = [@owner.transform.position.x + 1 + spawnX,
+      @owner.transform.position.y + spawnY]
+    shot.physics.velocity = [velocityX, velocityY]
     shot.initialVelocity = [velocityX, velocityY]
-    shot.physics.body.acceleration = [accelerationX, accelerationY]
+    shot.physics.acceleration = [accelerationX, accelerationY]
 
 `export default Weapon`

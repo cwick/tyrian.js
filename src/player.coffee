@@ -4,17 +4,17 @@ Player = Two.GameObject.extend
   initialize: ->
     @addComponent Two.Components.Transform
     @addComponent Two.Components.ArcadePhysics
-    tyrianOrigin = @transform.node.add new Two.TransformNode(position: [-5, -7])
+    tyrianOrigin = @transform.add new Two.TransformNode(position: [-5, -7])
 
     @shipSprite = @loadShip 233
 
     tyrianOrigin.add new Two.RenderNode(renderable: @shipSprite)
 
-    @physics.body.boundingBox.fromSprite @shipSprite
-    @physics.body.boundingBox.y *= -1
-    @physics.body.postUpdate = => @constrainToScreenBounds()
-    @physics.body.maxVelocity = [@maxVelocity, @maxVelocity]
-    @physics.body.drag = [@acceleration/2, @acceleration/2]
+    @physics.boundingBox.fromSprite @shipSprite
+    @physics.boundingBox.y *= -1
+    @physics.postUpdate = => @constrainToScreenBounds()
+    @physics.maxVelocity = [@maxVelocity, @maxVelocity]
+    @physics.drag = [@acceleration/2, @acceleration/2]
 
   maxVelocity: Two.Property
     get: -> 4 * @game.tyrian.TICKS_PER_SECOND
@@ -23,8 +23,8 @@ Player = Two.GameObject.extend
     get: -> Math.pow @game.tyrian.TICKS_PER_SECOND, 2
 
   spawn: ->
-    @physics.body.position = [110, 160]
-    @game.tyrian.layers.ships.add @transform.node
+    @physics.position = [110, 160]
+    @game.tyrian.layers.ships.add @transform
     @weapon = @game.spawn "Weapon", weaponNumber: 155, attachTo: @
 
   tick: ->
@@ -33,24 +33,24 @@ Player = Two.GameObject.extend
     @fireShots()
 
   updateMovement: ->
-    @physics.body.acceleration.x = 0
-    @physics.body.acceleration.y = 0
+    @physics.acceleration.x = 0
+    @physics.acceleration.y = 0
 
     if @game.input.keyboard.isKeyDown Two.Keys.LEFT
-      @physics.body.acceleration.x -= 1
+      @physics.acceleration.x -= 1
     if @game.input.keyboard.isKeyDown Two.Keys.RIGHT
-      @physics.body.acceleration.x += 1
+      @physics.acceleration.x += 1
 
     if @game.input.keyboard.isKeyDown Two.Keys.UP
-      @physics.body.acceleration.y -= 1
+      @physics.acceleration.y -= 1
     if @game.input.keyboard.isKeyDown Two.Keys.DOWN
-      @physics.body.acceleration.y += 1
+      @physics.acceleration.y += 1
 
-    @physics.body.acceleration.x *= @acceleration
-    @physics.body.acceleration.y *= @acceleration
+    @physics.acceleration.x *= @acceleration
+    @physics.acceleration.y *= @acceleration
 
   updateBankAngle: ->
-    bankAmount = @physics.body.velocity.x / @game.tyrian.TICKS_PER_SECOND
+    bankAmount = @physics.velocity.x / @game.tyrian.TICKS_PER_SECOND
     bankFrame = Math.floor((bankAmount)/2)
 
     @shipSprite.frame = bankFrame
@@ -62,19 +62,19 @@ Player = Two.GameObject.extend
     @weapon.spawn weaponNumber: weaponNumber
 
   constrainToScreenBounds: ->
-    if @physics.body.position.x < 40
-      @physics.body.position.x = 40
+    if @physics.position.x < 40
+      @physics.position.x = 40
 
-    if @physics.body.position.x > 256
-      @physics.body.position.x = 256
+    if @physics.position.x > 256
+      @physics.position.x = 256
 
-    if @physics.body.position.y < 10
-      @physics.body.position.y = 10
-      @physics.body.velocity.y = 0
+    if @physics.position.y < 10
+      @physics.position.y = 10
+      @physics.velocity.y = 0
 
-    if @physics.body.position.y > 160
-      @physics.body.position.y = 160
-      @physics.body.velocity.y = 0
+    if @physics.position.y > 160
+      @physics.position.y = 160
+      @physics.velocity.y = 0
 
   loadShip: (num) ->
     ships = @game.loader.loadJSON("player_ships").frames

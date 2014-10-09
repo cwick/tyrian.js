@@ -6,7 +6,7 @@ Shot = Two.GameObject.extend
     @addComponent Two.Components.ArcadePhysics
 
     @shotSprite = @game.loader.loadSpritesheet("player_shots").clone()
-    @transform.node.add new Two.RenderNode(renderable: @shotSprite)
+    @transform.add new Two.RenderNode(renderable: @shotSprite)
     @initialVelocity = [0, 0]
     @matchPosition = false
     @matchVelocity = false
@@ -14,20 +14,20 @@ Shot = Two.GameObject.extend
 
   spawn: (options) ->
     @shotSprite.frame = options.spriteNumber
-    @game.tyrian.layers.shots.add @transform.node
+    @game.tyrian.layers.shots.add @transform
 
   tick: ->
-    position = @physics.body.position
+    position = @physics.position
     if position.x < -34 || position.x > 290 || position.y < -15 || position.y > 190
       @die()
 
     if @slave?
-      slave = @slave.physics.body
+      slave = @slave.physics
 
       if @matchPosition
         position.x = slave.position.x
 
       if @matchVelocity
-        @physics.body.velocity.y = slave.velocity.y + @initialVelocity[1]
+        @physics.velocity.y = slave.velocity.y + @initialVelocity[1]
 
 `export default Shot`

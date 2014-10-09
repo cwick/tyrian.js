@@ -82,7 +82,7 @@ BaseState = Two.GameState.extend
     @debugOverlay.physicsTime = @game.debug.frameTime.physics
     @debugOverlay.drawImageCalls = @game.debug.counters.drawImage
     @debugOverlay.renderCommands = @game.debug.counters.renderCommands
-    @debugOverlay.playerPosition = @game.world.findByName("Player").transform.node.position
+    @debugOverlay.playerPosition = @game.world.findByName("Player").transform.position
 
   registerGameObjects: ->
     @game.registerGameObject "Player", Player
