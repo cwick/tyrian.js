@@ -12,7 +12,7 @@ Player = Two.GameObject.extend
 
     @physics.boundingBox.fromSprite @shipSprite
     @physics.boundingBox.y *= -1
-    @physics.postUpdate = => @constrainToScreenBounds()
+    @physics.delegate = @
     @physics.maxVelocity = [@maxVelocity, @maxVelocity]
     @physics.drag = [@acceleration/2, @acceleration/2]
 
@@ -61,7 +61,10 @@ Player = Two.GameObject.extend
   switchWeapon: (weaponNumber) ->
     @weapon.spawn weaponNumber: weaponNumber
 
-  constrainToScreenBounds: ->
+  physicsBodyDidUpdate: ->
+    @constrainShipToScreenBounds()
+
+  constrainShipToScreenBounds: ->
     if @physics.position.x < 40
       @physics.position.x = 40
 
