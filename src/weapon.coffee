@@ -4,7 +4,7 @@ Weapon = Two.GameObject.extend
   initialize: ->
     @weaponsData = @game.loader.loadJSON("weapons")
 
-  spawn: (options) ->
+  objectDidSpawn: (options) ->
     @owner = options.attachTo || @owner
     throw new Error("Weapons must be attached to a game object") unless @owner?
 

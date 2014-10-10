@@ -28,7 +28,7 @@ TiledBackground = Two.Renderable.extend
     commands
 
 Background = Two.GameObject.extend
-  spawn: ->
+  objectDidSpawn: ->
     sprites = @game.loader.loadSpritesheet "shapes/shapesz"
     tiles = @game.loader.loadJSON "levels/ep1/9"
     background = new Two.RenderNode(renderable:

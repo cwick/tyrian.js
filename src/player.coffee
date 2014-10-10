@@ -22,7 +22,7 @@ Player = Two.GameObject.extend
   acceleration: Two.Property
     get: -> Math.pow @game.tyrian.TICKS_PER_SECOND, 2
 
-  spawn: ->
+  objectDidSpawn: ->
     @physics.position = [110, 160]
     @game.tyrian.layers.ships.add @transform
     @weapon = @game.spawn "Weapon", weaponNumber: 155, attachTo: @
