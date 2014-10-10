@@ -4,7 +4,7 @@ Player = Two.GameObject.extend
   initialize: ->
     @addComponent Two.Components.Transform
     @addComponent Two.Components.ArcadePhysics
-    tyrianOrigin = @transform.add new Two.TransformNode(position: [-5, -7])
+    tyrianOrigin = @transform.add new Two.TransformNode(position: new Two.Vector2d([-5, -7]))
 
     @shipSprite = @loadShip 233
 
@@ -12,8 +12,8 @@ Player = Two.GameObject.extend
 
     @physics.boundingBox = @shipSprite.boundingBox
     @physics.delegate = @
-    @physics.maxVelocity = [@maxVelocity, @maxVelocity]
-    @physics.drag = [@acceleration/2, @acceleration/2]
+    @physics.maxVelocity.setValues [@maxVelocity, @maxVelocity]
+    @physics.drag.setValues [@acceleration/2, @acceleration/2]
 
   maxVelocity: Two.Property
     get: -> 4 * @game.tyrian.TICKS_PER_SECOND
@@ -22,7 +22,7 @@ Player = Two.GameObject.extend
     get: -> Math.pow @game.tyrian.TICKS_PER_SECOND, 2
 
   objectDidSpawn: ->
-    @physics.position = [110, 160]
+    @physics.position.setValues [110, 160]
     @game.tyrian.layers.ships.add @transform
     @weapon = @game.spawn "Weapon", weaponNumber: 155, attachTo: @
 
@@ -58,7 +58,7 @@ Player = Two.GameObject.extend
     @weapon.fireShots() if @game.input.keyboard.isKeyDown(Two.Keys.SPACEBAR)
 
   switchWeapon: (weaponNumber) ->
-    @weapon.spawn weaponNumber: weaponNumber
+    @weapon.objectDidSpawn weaponNumber: weaponNumber
 
   physicsBodyDidUpdate: ->
     @constrainShipToScreenBounds()

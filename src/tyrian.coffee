@@ -25,7 +25,7 @@ class GameDelegate
     Two.Sprite.defaultAnchorPoint = [0, 1]
 
     game.tyrian =
-      viewport: new Two.TransformNode(position: [-constants.BG_TILE_WIDTH, 0])
+      viewport: new Two.TransformNode(position: new Two.Vector2d([-constants.BG_TILE_WIDTH, 0]))
       layers:
         shots: new Two.TransformNode()
         ships: new Two.TransformNode()

@@ -7,7 +7,7 @@ Shot = Two.GameObject.extend
 
     @shotSprite = @game.loader.loadSpritesheet("player_shots").clone()
     @transform.add new Two.RenderNode(renderable: @shotSprite)
-    @initialVelocity = [0, 0]
+    @initialVelocity = new Two.Vector2d()
     @matchPosition = false
     @matchVelocity = false
     @slave = null
@@ -28,6 +28,6 @@ Shot = Two.GameObject.extend
         position.x = slave.position.x
 
       if @matchVelocity
-        @physics.velocity.y = slave.velocity.y + @initialVelocity[1]
+        @physics.velocity.y = slave.velocity.y + @initialVelocity.y
 
 `export default Shot`

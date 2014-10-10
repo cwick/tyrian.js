@@ -66,6 +66,8 @@ DebugOverlay = Two.Object.extend
     set: (value) -> @_playerPositionText.text = "Player X: #{value.x.toFixed(2)} Y: #{value.y.toFixed(2)}"
 
   _addText: (text, position) ->
-    @sceneNode.add(new Two.TransformNode(position: position)).add new Two.RenderNode(renderable: text)
+    @sceneNode.add(
+      new Two.TransformNode(position: new Two.Vector2d(position))
+    ).add new Two.RenderNode(renderable: text)
 
 `export default DebugOverlay`
