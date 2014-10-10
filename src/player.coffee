@@ -10,8 +10,7 @@ Player = Two.GameObject.extend
 
     tyrianOrigin.add new Two.RenderNode(renderable: @shipSprite)
 
-    @physics.boundingBox.fromSprite @shipSprite
-    @physics.boundingBox.y *= -1
+    @physics.boundingBox = @shipSprite.boundingBox
     @physics.delegate = @
     @physics.maxVelocity = [@maxVelocity, @maxVelocity]
     @physics.drag = [@acceleration/2, @acceleration/2]
