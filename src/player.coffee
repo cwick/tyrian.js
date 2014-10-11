@@ -21,7 +21,7 @@ Player = Two.GameObject.extend
   acceleration: Two.Property
     get: -> Math.pow @game.tyrian.TICKS_PER_SECOND, 2
 
-  objectDidSpawn: ->
+  prepareToSpawn: ->
     @physics.position.setValues [110, 160]
     @game.tyrian.layers.ships.add @transform
     @weapon = @game.spawn "Weapon", weaponNumber: 155, attachTo: @
@@ -58,7 +58,7 @@ Player = Two.GameObject.extend
     @weapon.fireShots() if @game.input.keyboard.isKeyDown(Two.Keys.SPACEBAR)
 
   switchWeapon: (weaponNumber) ->
-    @weapon.objectDidSpawn weaponNumber: weaponNumber
+    @weapon.prepareToSpawn weaponNumber: weaponNumber
 
   physicsBodyDidUpdate: ->
     @constrainShipToScreenBounds()

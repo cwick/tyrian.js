@@ -6,7 +6,7 @@ constants =
   SCREEN_HEIGHT: 200
   BG_TILE_WIDTH: 24
   BG_TILE_HEIGHT: 28
-  TICKS_PER_SECOND: 32
+  TICKS_PER_SECOND: 35
 
 class GameDelegate
   domElementForGame: ->

@@ -12,7 +12,7 @@ Shot = Two.GameObject.extend
     @matchVelocity = false
     @slave = null
 
-  objectDidSpawn: (options) ->
+  prepareToSpawn: (options) ->
     @shotSprite.frame = options.spriteNumber
     @game.tyrian.layers.shots.add @transform
 

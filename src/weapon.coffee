@@ -4,7 +4,7 @@ Weapon = Two.GameObject.extend
   initialize: ->
     @weaponsData = @game.loader.loadJSON("weapons")
 
-  objectDidSpawn: (options) ->
+  prepareToSpawn: (options) ->
     @owner = options.attachTo || @owner
     throw new Error("Weapons must be attached to a game object") unless @owner?
 
@@ -44,6 +44,9 @@ Weapon = Two.GameObject.extend
       velocityX = 0
       shot.slave = @owner
       shot.matchPosition = true
+
+    if @weapon.del[shotNumber] == 98
+      velocityX += @owner.physics.velocity.x
 
     if @weapon.sx[shotNumber] == 101
       shot.matchVelocity = true
